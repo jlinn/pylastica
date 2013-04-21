@@ -1,0 +1,28 @@
+__author__ = 'Joe Linn'
+
+import re
+
+def get_param_name(name_or_object):
+    """
+    Attempts to determine the name of the parameter based on its class
+    @param name_or_object: class instance or class name
+    @type name_or_object: str or object
+    @return: parameter name
+    @rtype: str
+    """
+    if not isinstance(name_or_object, str) and isinstance(name_or_object, object):
+        name_or_object = name_or_object.__class__.__name__
+    name_or_object = re.sub(r'(Facet|Query|Filter)', r'', name_or_object)
+    return to_snake_case(name_or_object)
+
+def to_snake_case(string):
+    """
+    Converts a CamelCase string to snake_case
+    @param string:
+    @type string: str
+    @return:
+    @rtype: str
+    """
+    string = re.sub(r'([A-Z])', r'_\1', string)
+    return string[1:].lower()
+

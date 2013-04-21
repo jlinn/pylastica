@@ -1,0 +1,22 @@
+# pypi
+/build
+/dist
+
+# do not wants
+*.py[c|o]
+*.egg-info
+*.egg
+.*.swp
+
+# temp files
+docs/_build
+tests/.noseids
+/elasticsearch*
+/performance/*
+/pyes_coverage/*
+/scripts/*
+
+# IDEs
+.idea
+*.iml
+.project
