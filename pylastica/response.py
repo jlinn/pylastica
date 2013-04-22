@@ -79,6 +79,15 @@ class Response(object):
             self._response = response
         return self._response
 
+    @property
+    def data(self):
+        """
+        Response data dict
+        @return:
+        @rtype: dict
+        """
+        return self.get_data()
+
     def get_transfer_info(self):
         """
         Get the transfer information if in DEBUG mode
@@ -128,4 +137,13 @@ class Response(object):
             raise pylastica.exception.NotFoundException("unable to find the field 'took' in the response.")
         return data['took']
 
-
+    def get_shard_statistics(self):
+        """
+        Get the _shard statistics for the response
+        @return:
+        @rtype: dict
+        """
+        data = self.get_data()
+        if '_shards' not in data:
+            raise pylastica.exception.NotFoundException("Unable to find the field '_shards' in the response.")
+        return data['_shards']

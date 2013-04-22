@@ -105,9 +105,6 @@ class Param(object):
         Set (overwrite) all params of this object
         @param params:
         @type params: dict
-        @return:
-        @rtype: self
         """
         assert isinstance(params, dict), "params must be of type dict: %r" % params
         self._params = params
-        return self
