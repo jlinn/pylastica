@@ -1,8 +1,7 @@
 __author__ = 'Joe Linn'
 
 import json
-import pylastica.param
-import pylastica.exception
+import pylastica
 
 class Request(pylastica.param.Param):
     POST = 'POST'
@@ -83,6 +82,24 @@ class Request(pylastica.param.Param):
         """
         return self.get_param('path')
 
+    @property
+    def path(self):
+        """
+
+        @return:
+        @rtype: str
+        """
+        return self.get_path()
+
+    @path.setter
+    def path(self, path):
+        """
+
+        @param path:
+        @type path: str
+        """
+        self.set_path(path)
+
     def set_query(self, query):
         """
 
@@ -100,6 +117,24 @@ class Request(pylastica.param.Param):
         @rtype: dict
         """
         return self.get_param('query')
+
+    @property
+    def query(self):
+        """
+
+        @return:
+        @rtype: dict
+        """
+        return self.get_query()
+
+    @query.setter
+    def query(self, query):
+        """
+
+        @param query:
+        @type query: dict
+        """
+        self.set_query(query)
 
     def set_connection(self, connection):
         """

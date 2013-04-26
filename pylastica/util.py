@@ -1,6 +1,7 @@
 __author__ = 'Joe Linn'
 
 import re
+import dateutil.parser
 
 def get_param_name(name_or_object):
     """
@@ -26,3 +27,13 @@ def to_snake_case(string):
     string = re.sub(r'([A-Z])', r'_\1', string)
     return string[1:].lower()
 
+def get_class(kls):
+    parts = kls.split('.')
+    module = ".".join(parts[:-1])
+    m = __import__( module )
+    for comp in parts[1:]:
+        m = getattr(m, comp)
+    return m
+
+def convert_date(date):
+    return dateutil.parser.parse(date).strftime('%s')

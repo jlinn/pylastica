@@ -7,7 +7,7 @@ class Response(object):
     def __init__(self, response_string):
         """
         @param response_string: response string (json)
-        @type response_string: str
+        @type response_string: str or dict
         """
         self._query_time = None
         self._response_string = ''
@@ -30,6 +30,15 @@ class Response(object):
         if 'error' in response:
             message = response['error']
         return message
+
+    @property
+    def error(self):
+        """
+
+        @return:
+        @rtype: str
+        """
+        return self.get_error()
 
     def has_error(self):
         """

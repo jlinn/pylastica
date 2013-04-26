@@ -1,6 +1,9 @@
 __author__ = 'Joe Linn'
 
 import abc
+import pylastica
+from . import bulk
+from . import connection
 
 class AbstractException(Exception):
     __metaclass__ = abc.ABCMeta
@@ -26,17 +29,29 @@ class ConnectionException(AbstractException):
         @param kwargs:
         @type kwargs:
         """
+        assert isinstance(request, pylastica.Request), "request must be an instance of Request: %r" % request
+        assert isinstance(response, pylastica.response.Response), "response must be an instance of Response: %r" % response
         self._request = request
         self._response = response
-        super(ConnectionException, self).__init__(*args, **kwargs)
+        super(ConnectionException, self).__init__(message, *args, **kwargs)
 
-    def get_request(self):
+    @property
+    def request(self):
         """
 
         @return:
-        @rtype:
+        @rtype: pylastica.request.Request
         """
-        #TODO: finish this class
+        return self._request
+
+    @property
+    def response(self):
+        """
+
+        @return:
+        @rtype: pylastica.response.Response
+        """
+        return self._response
 
 class InvalidException(AbstractException):
     pass
@@ -47,7 +62,37 @@ class NotFoundException(AbstractException):
 class NotImplementedException(AbstractException):
     pass
 
-#TODO: ResponseException
+class ResponseException(AbstractException):
+    def __init__(self, request, response, *args, **kwargs):
+        """
+
+        @param request:
+        @type request: pylastica.request.Request
+        @param response:
+        @type response: pylastica.response.Response
+        """
+        self._request = request
+        self._response = response
+        super(ResponseException, self).__init__(response.get_error(), *args, **kwargs)
+
+    @property
+    def request(self):
+        """
+
+        @return:
+        @rtype: pylastica.request.Request
+        """
+        return self._request
+
+    @property
+    def response(self):
+        """
+
+        @return:
+        @rtype: pylastica.response.Response
+        """
+        return self._response
+
 
 class RuntimeException(AbstractException):
     pass

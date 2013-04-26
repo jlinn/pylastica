@@ -257,4 +257,164 @@ class Client(object):
         assert isinstance(docs, list) and len(docs) > 0, "docs must be a list of at least one document: %r" % docs
         return pylastica.bulk.Bulk(self).add_documents(docs, pylastica.bulk.Action.OP_TYPE_DELETE).send()
 
-    #TODO: finish, starting with getStatus()
+    @property
+    def status(self):
+        """
+        Returns the status object for all indices
+        @return:
+        @rtype: pylastica.status.Status
+        """
+        return pylastica.status.Status(self)
+
+    @property
+    def cluster(self):
+        """
+        Returns the current cluster
+        @return:
+        @rtype: pylastica.cluster.Cluster
+        """
+        return pylastica.cluster.Cluster(self)
+
+    def add_connection(self, connection):
+        """
+
+        @param connection:
+        @type connection: pylastica.connection.Connection
+        @return:
+        @rtype: self
+        """
+        self._connections.append(connection)
+        return self
+
+    def get_connection(self):
+        """
+
+        @return:
+        @rtype: pylastica.connection.Connection
+        """
+        enabled_connection = None
+        for connection in self._connections:
+            if connection.is_enabled():
+                enabled_connection = connection
+                break
+        if enabled_connection is None:
+            raise pylastica.exception.ClientException("No enabled connection.")
+        return enabled_connection
+
+    @property
+    def connections(self):
+        """
+
+        @return:
+        @rtype: list of pylastica.connection.Connection
+        """
+        return self._connections
+
+    @connections.setter
+    def connections(self, connections):
+        """
+
+        @param connections:
+        @type connections: list of pylastica.connection.Connection
+        """
+        self._connections = connections
+
+    def delete_ids(self, ids, index, doc_type):
+        """
+        Deletes documents with the given ids, index, and doc_type
+        @param ids: document ids
+        @type ids: list of str
+        @param index: index / alias name
+        @type index: str
+        @param doc_type: type of documents
+        @type doc_type: str
+        @return:
+        @rtype: pylastica.bulk.ResponseSet
+        """
+        assert isinstance(ids, list) and len(ids) > 0, "ids must be a list of str: %r" % ids
+        bulk = pylastica.bulk.Bulk(self)
+        bulk.index = index
+        bulk.doc_type = doc_type
+        for doc_id in ids:
+            action = pylastica.bulk.Action(pylastica.bulk.Action.OP_TYPE_DELETE)
+            action.set_id(doc_id)
+        return bulk.send()
+
+    def bulk(self, params):
+        """
+        Bulk operation
+        @see: http://www.elasticsearch.org/guide/reference/api/bulk.html
+        @param params: parameter list
+        @type params: list of dict
+        @return:
+        @rtype: pylastica.bulk.ResponseSet
+        """
+        assert isinstance(params, list) and len(params) > 0, "params must be a list: %r" %params
+        bulk = pylastica.bulk.Bulk(self)
+        return bulk.add_raw_data(params).send()
+
+    def request(self, path, method=pylastica.request.Request.GET, data=None, query=None):
+        """
+        Makes a call to the elasticsearch server.
+        @param path: path to call
+        @type path: str
+        @param method: REST method to use. See Request class properties.
+        @type method: str
+        @param data: optional data as dict
+        @type data: dict
+        @param query: optional query params
+        @type query: dict
+        @return:
+        @rtype: pylastica.response.Response
+        """
+        connection = self.get_connection()
+        try:
+            request = pylastica.request.Request(path, method, data, query, connection)
+            self._log(request)
+            response = request.send()
+            self._last_request = request
+            self._last_response = response
+            return response
+        except pylastica.exception.ConnectionException as e:
+            connection.set_enabled(False)
+            #calls callback with connection as param to make it possible to persist invalid connections
+            if self._callback is not None:
+                self._callback(connection, e)
+            return self.request(path, method, data, query)
+
+    def optimize_all(self, args=None):
+        """
+        Optimizes all search indices
+        @param args: optional arguments
+        @type args: dict
+        @return:
+        @rtype: pylastica.response.Response
+        """
+        return self.request('_optimize', pylastica.request.Request.POST, args)
+
+    def _log(self, message):
+        """
+
+        @param message:
+        @type message: str or pylastica.request.Request
+        """
+        if self.get_config('log'):
+            log = pylastica.log.Log(self.get_config('log'))
+            log.log(message)
+
+    def get_last_request(self):
+        """
+
+        @return:
+        @rtype: pylastica.request.Request
+        """
+        return self._last_request
+
+    def get_last_response(self):
+        """
+
+        @return:
+        @rtype: pylastica.response.Response
+        """
+        return self._last_response
+

@@ -10,7 +10,7 @@ class ResultSet(object):
         @type query: pylastica.query.Query
         """
         assert isinstance(response, pylastica.response.Response), "response must be of type Response: %r" % response
-        #TODO: assert type of query
+        assert isinstance(query, pylastica.query.Query), "query must be of type Query: %r" % query
         self._results = []
         self._response = response
         self._query = query
