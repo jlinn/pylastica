@@ -1,7 +1,7 @@
 __author__ = 'Joe Linn'
 
-import pylastica.util
 import pylastica.exception
+import pylastica.util
 
 class Param(object):
     def __init__(self):

@@ -26,12 +26,13 @@ class ResultSet(object):
         @type response: pylastica.response.Response
         """
         result = response.get_data()
-        self._total_hits = result['hits']['total'] if 'total' in result['hits'] else 0
-        self._max_score = result['hits']['max_score'] if 'max_score' in result['hits'] else 0
-        self._took = result['took'] if 'took' in result else 0
-        self._timed_out = 'timed_out' in result and result['timed_out'] is not None
-        if 'hits' in result['hits']:
-            self._results = [pylastica.result.Result(hit) for hit in result['hits']['hits']]
+        if 'hits' in result:
+            self._total_hits = result['hits']['total'] if 'total' in result['hits'] else 0
+            self._max_score = result['hits']['max_score'] if 'max_score' in result['hits'] else 0
+            self._took = result['took'] if 'took' in result else 0
+            self._timed_out = 'timed_out' in result and result['timed_out'] is not None
+            if 'hits' in result['hits']:
+                self._results = [pylastica.result.Result(hit) for hit in result['hits']['hits']]
 
     def get_results(self):
         """

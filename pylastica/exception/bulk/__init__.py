@@ -1,7 +1,7 @@
 __author__ = 'Joe Linn'
 
-import pylastica
-from . import response
+#import pylastica
+import pylastica.exception
 
 class ResponseException(pylastica.exception.BulkException):
     def __init__(self, response_set, *args, **kwargs):
@@ -75,3 +75,5 @@ class ResponseException(pylastica.exception.BulkException):
         for action_exception in self.action_exceptions:
             message += str(action_exception) + "\n"
         return message
+
+from . import response

@@ -1,9 +1,8 @@
 __author__ = 'Joe Linn'
 
 import abc
-import pylastica
-from . import bulk
-from . import connection
+#import pylastica
+
 
 class AbstractException(Exception):
     __metaclass__ = abc.ABCMeta
@@ -96,3 +95,6 @@ class ResponseException(AbstractException):
 
 class RuntimeException(AbstractException):
     pass
+
+#from . import bulk
+#from . import connection

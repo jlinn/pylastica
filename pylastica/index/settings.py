@@ -1,6 +1,7 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+#import pylastica
+import pylastica.request
 
 class Settings(object):
     DEFAULT_REFRESH_INTERVAL = '1s'

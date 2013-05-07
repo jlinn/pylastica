@@ -1,6 +1,7 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+#import pylastica
+import pylastica.bulk.action
 
 class DeleteDocument(pylastica.bulk.action.AbstractDocument):
     def __init__(self, document):

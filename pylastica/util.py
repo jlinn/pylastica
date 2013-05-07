@@ -2,6 +2,7 @@ __author__ = 'Joe Linn'
 
 import re
 import dateutil.parser
+import importlib
 
 def get_param_name(name_or_object):
     """
@@ -29,10 +30,12 @@ def to_snake_case(string):
 
 def get_class(kls):
     parts = kls.split('.')
-    module = ".".join(parts[:-1])
-    m = __import__( module )
-    for comp in parts[1:]:
-        m = getattr(m, comp)
+    module = ".".join(parts[:-1]) + '.' + parts[-1].lower()
+    #m = __import__( module, level=0)
+    m = importlib.import_module(module)
+    # for comp in parts[1:]:
+    #     m = getattr(m, comp)
+    m = getattr(m, parts[-1])
     return m
 
 def convert_date(date):

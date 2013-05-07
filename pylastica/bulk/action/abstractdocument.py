@@ -1,9 +1,11 @@
 __author__ = 'Joe Linn'
 
 import abc
-import pylastica
+#import pylastica
+import pylastica.document
+from . import Action
 
-class AbstractDocument(pylastica.bulk.action.Action):
+class AbstractDocument(Action):
     __metaclass__ = abc.ABCMeta
 
     def __init__(self, document):
@@ -12,6 +14,7 @@ class AbstractDocument(pylastica.bulk.action.Action):
         @param document:
         @type document: pylastica.document.Document
         """
+        super(AbstractDocument, self).__init__()
         self.document = document
 
     @property
@@ -21,7 +24,7 @@ class AbstractDocument(pylastica.bulk.action.Action):
         @return:
         @rtype: pylastica.document.Document
         """
-        return self._document
+        return self.get_document()
 
     @document.setter
     def document(self, document):
@@ -30,10 +33,29 @@ class AbstractDocument(pylastica.bulk.action.Action):
         @param document:
         @type document: pylastica.document.Document
         """
+        self.set_document(document)
+
+    def set_document(self, document):
+        """
+
+        @param document:
+        @type document: pylastica.document.Document
+        @return:
+        @rtype: self
+        """
         assert isinstance(document, pylastica.document.Document), "document must be an instance of Document: %r" % document
         self._document = document
         metadata = self._get_metadata_by_document(document)
         self.metadata = metadata
+        return self
+
+    def get_document(self):
+        """
+
+        @return:
+        @rtype: pylastica.document.Document
+        """
+        return self._document
 
     @abc.abstractmethod
     def _get_metadata_by_document(self, document):
@@ -67,5 +89,6 @@ class AbstractDocument(pylastica.bulk.action.Action):
         elif op_type == cls.OP_TYPE_CREATE:
             action = pylastica.bulk.action.createdocument.CreateDocument(document)
         else:
-            action = pylastica.bulk.action.indexdocument.IndexDocument(document)
+            from pylastica.bulk.action.indexdocument import IndexDocument
+            action = IndexDocument(document)
         return action

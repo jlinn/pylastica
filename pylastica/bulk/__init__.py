@@ -1,6 +1,6 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+#import pylastica
 from . import action
 from .response import *
 from .responseset import *
@@ -137,7 +137,8 @@ class Bulk(object):
         @return:
         @rtype: self
         """
-        return self.add_action(pylastica.bulk.action.AbstractDocument.create(document, op_type))
+        from pylastica.bulk.action.abstractdocument import AbstractDocument
+        return self.add_action(AbstractDocument.create(document, op_type))
 
     def add_documents(self, documents, op_type=None):
         """
@@ -200,6 +201,7 @@ class Bulk(object):
         @return:
         @rtype: pylastica.bulk.responseset.ResponseSet
         """
+        from pylastica.bulk.action.abstractdocument import AbstractDocument
         response_data = response.data
         actions = self.actions
         bulk_responses = []
@@ -211,7 +213,7 @@ class Bulk(object):
                     raise pylastica.exception.InvalidException("No response found for action #%s." % key)
                 op_type = action.op_type
                 bulk_response_data = item[item.keys()[0]]
-                if isinstance(action, pylastica.bulk.action.AbstractDocument):
+                if isinstance(action, AbstractDocument):
                     document = action.document
                     if document.auto_populate or self._client.get_config_value(['document', 'autoPopulate'], False):
                         if document.has_id() and '_id' in bulk_response_data:

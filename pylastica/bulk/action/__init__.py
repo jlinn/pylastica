@@ -1,18 +1,18 @@
 __author__ = 'Joe Linn'
 
 import json
-import pylastica
-from .abstractdocument import *
-from .createdocument import *
-from .deletedocument import *
-from .indexdocument import *
+#import pylastica
+#from .abstractdocument import *
+# from .createdocument import *
+# from .deletedocument import *
+# from .indexdocument import *
 
 class Action(object):
     OP_TYPE_CREATE = 'create'
     OP_TYPE_INDEX = 'index'
     OP_TYPE_DELETE = 'delete'
 
-    def __init__(self, op_type=pylastica.bulk.action.Action.OP_TYPE_INDEX, metadata=None, source=None):
+    def __init__(self, op_type=OP_TYPE_INDEX, metadata=None, source=None):
         """
 
         @param op_type: see OP_TYPE_* class properties for options
@@ -88,7 +88,6 @@ class Action(object):
         @type source: dict
         """
         self._source = source
-        return self
 
     def has_source(self):
         """
@@ -153,14 +152,15 @@ class Action(object):
         @return:
         @rtype: str
         """
-        string = json.dumps(self.action_metadata) + pylastica.bulk.Bulk.DELIMITER
+        from pylastica.bulk import Bulk
+        string = json.dumps(self.action_metadata) + Bulk.DELIMITER
         if self.has_source():
             source = self.source
             if isinstance(source, str):
                 string += source
             else:
                 string += json.dumps(source)
-            string += pylastica.bulk.Bulk.DELIMITER
+            string += Bulk.DELIMITER
         return string
 
     def __str__(self):

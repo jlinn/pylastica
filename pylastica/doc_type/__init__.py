@@ -1,7 +1,7 @@
 __author__ = 'Joe Linn'
 
 import urllib
-import pylastica
+#import pylastica
 from .abstracttype import *
 from .mapping import *
 
@@ -27,7 +27,7 @@ class DocType(pylastica.searchable.Searchable):
         @rtype: pylastica.response.Response
         """
         assert isinstance(doc, pylastica.document.Document), "doc must be of type Document: %r" % doc
-        path = urllib.urlencode(doc.doc_id)
+        path = urllib.quote_plus(str(doc.doc_id))
         request_type = pylastica.request.Request.PUT
         if path is None or path == '':
             #no doc id has been given; use post so that an id is automatically created

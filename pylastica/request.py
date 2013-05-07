@@ -1,7 +1,8 @@
 __author__ = 'Joe Linn'
 
 import json
-import pylastica
+#import pylastica
+import pylastica.param
 
 class Request(pylastica.param.Param):
     POST = 'POST'
@@ -22,11 +23,16 @@ class Request(pylastica.param.Param):
         @param connection: optional connection object
         @type connection: pylastica.connection.Connection
         """
+        super(Request, self).__init__()
         self._connection = None
         if not query: query = {}
         if not data: data = {}
-        #TODO: finish
-        super(Request, self).__init__()
+        self.set_path(path)
+        self.set_method(method)
+        self.set_data(data)
+        self.set_query(query)
+        if connection is not None:
+            self.set_connection(connection)
 
     def set_method(self, method):
         """

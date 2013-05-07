@@ -1,8 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+#import pylastica
+import pylastica.bulk.action.abstractdocument
 
-class IndexDocument(pylastica.bulk.action.AbstractDocument):
+class IndexDocument(pylastica.bulk.action.abstractdocument.AbstractDocument):
     def __init__(self, document):
         self._op_type = self.OP_TYPE_INDEX
         super(IndexDocument, self).__init__(document)
@@ -22,7 +23,7 @@ class IndexDocument(pylastica.bulk.action.AbstractDocument):
         @param document:
         @type document:  pylastica.document.Document
         """
-        super(IndexDocument, self).document = document
+        super(IndexDocument, self).set_document(document)
         self.source = document.data
 
     def _get_metadata_by_document(self, document):

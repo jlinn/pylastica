@@ -1,6 +1,8 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+#import pylastica
+import pylastica.param
+import pylastica.transport
 
 class Connection(pylastica.param.Param):
     DEFAULT_PORT = 9200
@@ -14,6 +16,7 @@ class Connection(pylastica.param.Param):
         @param params: optional connection params (host, port, transport, timeout, etc.)
         @type params: dict
         """
+        super(Connection, self).__init__()
         self.params = params
         self.enabled = True
         if not self.has_param('config'):
@@ -26,7 +29,7 @@ class Connection(pylastica.param.Param):
         @return:
         @rtype: int
         """
-        return self.get_param('port') if self.has_param('port') else self.DEFAULT_PORT
+        return self.get_param('port') if self.has_param('port') and self.get_param('port') is not None else self.DEFAULT_PORT
 
     @port.setter
     def port(self, port):
@@ -62,7 +65,7 @@ class Connection(pylastica.param.Param):
         @return:
         @rtype: str or dict
         """
-        return self.get_param('transport') if self.has_param('transport') else self.DEFAULT_TRANSPORT
+        return self.get_param('transport') if self.has_param('transport') and self.get_param('transport') is not None else self.DEFAULT_TRANSPORT
 
     @transport.setter
     def transport(self, transport):
@@ -79,7 +82,7 @@ class Connection(pylastica.param.Param):
         @return:
         @rtype: str
         """
-        return self.get_param('path') if self.has_param('path') else ''
+        return self.get_param('path') if self.has_param('path') and self.get_param('path') is not None else ''
 
     @path.setter
     def path(self, path):
@@ -97,7 +100,7 @@ class Connection(pylastica.param.Param):
         @return: connection timeout in seconds
         @rtype: int
         """
-        return int(self.get_param('timeout')) if self.has_param('timeout') else self.TIMEOUT
+        return int(self.get_param('timeout')) if self.has_param('timeout') and self.get_param('timeout') is not None else self.TIMEOUT
 
     @timeout.setter
     def timeout(self, timeout):
@@ -212,7 +215,7 @@ class Connection(pylastica.param.Param):
         connection = None
         if isinstance(params, Connection):
             connection = params
-        elif isinstance(connection, dict):
+        elif isinstance(params, dict):
             connection = cls(params)
         else:
             raise pylastica.exception.InvalidException('Invalid connection params: %r' % params)

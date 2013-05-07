@@ -1,6 +1,7 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+#import pylastica
+import pylastica.exception
 
 class HttpException(pylastica.exception.ConnectionException):
     def __init__(self, error, request=None, response=None):

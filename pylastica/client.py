@@ -1,6 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+#import pylastica
+import pylastica.connection
+import pylastica.index
+import pylastica.request
 
 class Client(object):
 
@@ -52,6 +55,34 @@ class Client(object):
             'log': log,
             'retry_on_conflict': retry_on_conflict
         }
+        self._init_connections()
+
+    def _init_connections(self):
+        connections = self.get_config('connections')
+        for connection in connections:
+            self._connections.append(pylastica.connection.Connection.create(connection))
+        if 'servers' in self._config:
+            for server in self.get_config('servers'):
+                self._connections.append(pylastica.connection.Connection.create(server))
+        if not len(self._connections):
+            self._connections.append(pylastica.connection.Connection.create(self._configure_params()))
+
+    def _configure_params(self):
+        """
+
+        @return:
+        @rtype: dict
+        """
+        config = self.get_config()
+        params = {
+            'config': {}
+        }
+        for key, value in config.iteritems():
+            if key in ['curl', 'headers', 'url']:
+                params['config'][key] = value
+            else:
+                params[key] = value
+        return params
 
     def set_config(self, config):
         """

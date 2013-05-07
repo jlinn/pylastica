@@ -1,11 +1,12 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+#import pylastica
+import pylastica.searchable
 from .settings import *
 from .stats import *
 from .status import *
 
-class Index(pylastica.Searchable):
+class Index(pylastica.searchable.Searchable):
     def __init__(self, client, name):
         """
 

@@ -113,11 +113,11 @@ class Result(object):
         """
         return self.get_param('_explanation')
 
-    def __getattribute__(self, name):
-        source = self.get_data()
-        if name in source:
-            return source[name]
-        else:
-            return None
+    # def __getattribute__(self, name):
+    #     source = self.get_data()
+    #     if name in source:
+    #         return source[name]
+    #     else:
+    #         return None
 
 

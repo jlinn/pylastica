@@ -1,6 +1,7 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+#import pylastica
+import pylastica.bulk.action
 
 class CreateDocument(pylastica.bulk.action.IndexDocument):
     def __init__(self, document):

@@ -3,7 +3,8 @@ __author__ = 'Joe Linn'
 import urllib
 import urllib2
 import json
-import pylastica
+#import pylastica
+import pylastica.transport
 
 class Http(pylastica.transport.AbstractTransport):
     _scheme = 'http'
@@ -14,8 +15,8 @@ class Http(pylastica.transport.AbstractTransport):
     METHOD_DELETE = 'DELETE'
 
     def __init__(self, connection=None):
-        self._headers = {}
         super(Http, self).__init__(connection)
+        self._headers = {}
 
     def execute(self, request, params):
         """
@@ -29,7 +30,7 @@ class Http(pylastica.transport.AbstractTransport):
         """
         connection = self.connection
         url = connection.get_config('url') if connection.has_config('url') else ''
-        if url != '':
+        if url != '' and url is not None:
             base_url = url
         else:
             connection_data = {
@@ -156,7 +157,6 @@ class Http(pylastica.transport.AbstractTransport):
         try:
             response = urllib2.urlopen(request, data, timeout=self.connection.timeout)
         except urllib2.HTTPError as e:
-            print e.read()
-            exit()
+            response = e
         return response.read()
 

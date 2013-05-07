@@ -1,9 +1,11 @@
 __author__ = 'Joe Linn'
 
 import base64
-import pylastica
+#import pylastica
+import pylastica.param
+import pylastica.bulk.action
 
-class Document(pylastica.Param):
+class Document(pylastica.param.Param):
     OP_TYPE_CREATE = pylastica.bulk.action.Action.OP_TYPE_CREATE
 
     def __init__(self, doc_id=None, data=None, doc_type=None, index=None):
@@ -20,6 +22,7 @@ class Document(pylastica.Param):
         @return:
         @rtype:
         """
+        super(Document, self).__init__()
         self._data = {}
         self._script = None
         self._auto_populate = False
@@ -239,9 +242,9 @@ class Document(pylastica.Param):
         @type doc_type: str or pylastica.doc_type.DocType
         """
         if isinstance(doc_type, pylastica.doc_type.DocType):
-            self.index = type.index
-            type = type.name
-        self.set_param('_type', type)
+            self.index = doc_type.index
+            doc_type = doc_type.name
+        self.set_param('_type', doc_type)
 
     @property
     def index(self):

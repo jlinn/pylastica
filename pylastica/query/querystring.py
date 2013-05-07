@@ -1,6 +1,7 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+#import pylastica
+import pylastica.query
 
 class QueryString(pylastica.query.AbstractQuery):
     def __init__(self, query_string=None):
@@ -8,6 +9,7 @@ class QueryString(pylastica.query.AbstractQuery):
         @param query_string: optional query string
         @type query_string: str
         """
+        super(QueryString, self).__init__()
         self.set_query(query_string)
 
     def set_query(self, query):
@@ -19,7 +21,8 @@ class QueryString(pylastica.query.AbstractQuery):
         @rtype: self
         """
         assert isinstance(query, str), "query must be a str: %r" % query
-        return self.set_param('query', query)
+        self._query_string = query
+        return self
 
     def set_default_field(self, field):
         """
@@ -175,9 +178,9 @@ class QueryString(pylastica.query.AbstractQuery):
         return self.set_param('rewrite', rewrite)
 
     def to_dict(self):
+        dictionary = {'query': self._query_string}
+        dictionary.update(self.params)
         return {
-            'query_string':{
-                'query': ''
-            }.update(self.params)
+            'query_string': dictionary
         }
 

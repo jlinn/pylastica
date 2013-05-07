@@ -1,6 +1,7 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+#import pylastica
+import pylastica.response
 
 class ResponseSet(pylastica.response.Response):
     def __init__(self, response, bulk_responses):

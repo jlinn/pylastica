@@ -1,14 +1,16 @@
 __author__ = 'Joe Linn'
 
 import abc
-import pylastica
-from .bool import *
-from .constantscore import *
-from .customfiltersscore import *
+#import pylastica
+import pylastica.param
+import pylastica.filter
+# from .bool import *
+# from .constantscore import *
+# from .customfiltersscore import *
 
-from .matchall import *
+# from .matchall import *
+#
 
-from .querystring import *
 
 class AbstractQuery(pylastica.param.Param):
     __metaclass__ = abc.ABCMeta
@@ -20,6 +22,7 @@ class Query(pylastica.param.Param):
         @param query: optional query object
         @type query: dict or pylastica.query.AbstractQuery
         """
+        super(Query, self).__init__()
         if isinstance(query, dict):
             self.set_raw_query(query)
         elif isinstance(query, AbstractQuery):
@@ -47,6 +50,7 @@ class Query(pylastica.param.Param):
         elif query is None or query == '':
             return cls(pylastica.query.MatchAll())
         elif isinstance(query, str):
+            from .querystring import QueryString
             return cls(QueryString(query))
         raise NotImplementedError()
 

@@ -4,15 +4,15 @@ import abc
 import pylastica.param
 import pylastica.exception
 
-from .bool import *
-from .booland import *
-from .boolnot import *
-from .boolor import *
-from .exists import *
-from .geoboundingbox import *
-from .geodistance import *
-from .geodistancerange import *
-from .geopolygon import *
+# from .bool import *
+# from .booland import *
+# from .boolnot import *
+# from .boolor import *
+# from .exists import *
+# from .geoboundingbox import *
+# from .geodistance import *
+# from .geodistancerange import *
+# from .geopolygon import *
 
 class AbstractFilter(pylastica.param.Param):
     __metaclass__ = abc.ABCMeta

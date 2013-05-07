@@ -1,6 +1,8 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+#import pylastica
+import pylastica.client
+import pylastica.query
 
 class Search(object):
     OPTION_SEARCH_TYPE = 'search_type'

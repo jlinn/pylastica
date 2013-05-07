@@ -1,8 +1,9 @@
 __author__ = 'Joe Linn'
 
 import abc
-import pylastica
-from .http import *
+#import pylastica
+#from .http import *
+import pylastica.param
 
 class AbstractTransport(pylastica.param.Param):
     __metaclass__ = abc.ABCMeta
@@ -12,6 +13,7 @@ class AbstractTransport(pylastica.param.Param):
         @param connection:
         @type connection:  pylastica.connection.Connection
         """
+        super(AbstractTransport, self).__init__()
         self._connection = None
         if connection is not None:
             self.connection = connection
@@ -73,10 +75,10 @@ class AbstractTransport(pylastica.param.Param):
             transport = pylastica.util.get_class(class_name)()
         if isinstance(transport, AbstractTransport):
             transport.connection = connection
-            for key, value in params.iteritems():
-                transport.set_param(key, value)
+            if params:
+                for key, value in params.iteritems():
+                    transport.set_param(key, value)
         else:
             raise pylastica.exception.InvalidException("Invalid transport.")
         return transport
-
 
