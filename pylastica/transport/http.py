@@ -154,9 +154,13 @@ class Http(pylastica.transport.AbstractTransport):
         request.get_method = lambda: method
         if type(data) == dict:
             data = urllib.urlencode(data)
+        response = None
         try:
             response = urllib2.urlopen(request, data, timeout=self.connection.timeout)
         except urllib2.HTTPError as e:
             response = e
+        except urllib2.URLError as e:
+            import pylastica.exception.connection
+            raise pylastica.exception.connection.HttpException(e)
         return response.read()
 

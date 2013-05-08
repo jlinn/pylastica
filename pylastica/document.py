@@ -27,7 +27,8 @@ class Document(pylastica.param.Param):
         self._script = None
         self._auto_populate = False
         self.doc_id = doc_id
-        self.data = data
+        if data is not None:
+            self.data = data
         self.doc_type = doc_type
         self.index = index
 
@@ -38,7 +39,7 @@ class Document(pylastica.param.Param):
         @return:
         @rtype: str
         """
-        return self.get_param('_id') if self.has_param('_id') else None
+        return self.get_param('_id') if self.has_param('_id') else ''
 
     @doc_id.setter
     def doc_id(self, doc_id):
@@ -47,7 +48,8 @@ class Document(pylastica.param.Param):
         @param doc_id:
         @type doc_id: str
         """
-        self.set_param('_id', doc_id)
+        if doc_id is not None:
+            self.set_param('_id', str(doc_id))
 
     def has_id(self):
         """
@@ -79,7 +81,7 @@ class Document(pylastica.param.Param):
         @return:
         @rtype: self
         """
-        assert isinstance(self._data, dict), "Document data is serialized dat. Data creation is forbidden."
+        assert isinstance(self._data, dict), "Document data is serialized data. Data creation is forbidden."
         self._data[key] = value
         return self
 
@@ -132,7 +134,7 @@ class Document(pylastica.param.Param):
         @return:
         @rtype: self
         """
-        value = base64.b64encode(open(file_path, 'rb').readall())
+        value = base64.b64encode(open(file_path, 'rb').read())
         if mime_type is not None:
             value = {
                 '_content_type': mime_type,

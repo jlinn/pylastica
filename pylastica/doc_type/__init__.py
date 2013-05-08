@@ -92,7 +92,7 @@ class DocType(pylastica.searchable.Searchable):
         @return:
         @rtype: pylastica.document.Document
         """
-        path = urllib.urlencode(doc_id)
+        path = urllib.quote_plus(str(doc_id))
         try:
             result = self.request(path, pylastica.request.Request.GET, query=options).data
         except pylastica.exception.ResponseException:

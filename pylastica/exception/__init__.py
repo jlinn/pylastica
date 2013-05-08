@@ -2,7 +2,7 @@ __author__ = 'Joe Linn'
 
 import abc
 #import pylastica
-
+import pylastica.response
 
 class AbstractException(Exception):
     __metaclass__ = abc.ABCMeta
@@ -28,8 +28,10 @@ class ConnectionException(AbstractException):
         @param kwargs:
         @type kwargs:
         """
-        assert isinstance(request, pylastica.Request), "request must be an instance of Request: %r" % request
-        assert isinstance(response, pylastica.response.Response), "response must be an instance of Response: %r" % response
+        if request is not None:
+            assert isinstance(request, pylastica.Request), "request must be an instance of Request: %r" % request
+        if response is not None:
+            assert isinstance(response, pylastica.response.Response), "response must be an instance of Response: %r" % response
         self._request = request
         self._response = response
         super(ConnectionException, self).__init__(message, *args, **kwargs)

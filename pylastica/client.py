@@ -23,8 +23,8 @@ class Client(object):
         @type persistent:
         @param timeout:
         @type timeout:
-        @param connections:
-        @type connections:
+        @param connections: A list of connection parameters [{'host': 'localhost', 'port': 9200}]
+        @type connections: list of dict
         @param round_robin:
         @type round_robin:
         @param log: set to True to enable logging. Set to a string to specify a log file.
@@ -38,7 +38,7 @@ class Client(object):
         """
         if connections is None:
             connections = []
-        self._connections = connections
+        self._connections = []
         self._callback = callback
         """@type: pylastica.response.Response"""
         self._last_response = None
@@ -211,7 +211,7 @@ class Client(object):
         """
         if options is None:
             options = {}
-        path = '/'.join([index, type, id, '_update'])
+        path = '/'.join([index, doc_type, str(doc_id), '_update'])
         if isinstance(data, pylastica.script.Script):
             request_data = data.to_dict()
         elif isinstance(data, pylastica.document.Document):
@@ -286,7 +286,8 @@ class Client(object):
         @rtype: pylastica.bulk.ResponseSet
         """
         assert isinstance(docs, list) and len(docs) > 0, "docs must be a list of at least one document: %r" % docs
-        return pylastica.bulk.Bulk(self).add_documents(docs, pylastica.bulk.Action.OP_TYPE_DELETE).send()
+        from pylastica.bulk.action import Action
+        return pylastica.bulk.Bulk(self).add_documents(docs, Action.OP_TYPE_DELETE).send()
 
     @property
     def status(self):
@@ -356,7 +357,7 @@ class Client(object):
         @param ids: document ids
         @type ids: list of str
         @param index: index / alias name
-        @type index: str
+        @type index: str or pylastica.index.Index
         @param doc_type: type of documents
         @type doc_type: str
         @return:
@@ -367,8 +368,9 @@ class Client(object):
         bulk.index = index
         bulk.doc_type = doc_type
         for doc_id in ids:
-            action = pylastica.bulk.Action(pylastica.bulk.Action.OP_TYPE_DELETE)
+            action = pylastica.bulk.action.Action(pylastica.bulk.action.Action.OP_TYPE_DELETE)
             action.set_id(doc_id)
+            bulk.add_action(action)
         return bulk.send()
 
     def bulk(self, params):
@@ -407,7 +409,7 @@ class Client(object):
             self._last_response = response
             return response
         except pylastica.exception.ConnectionException as e:
-            connection.set_enabled(False)
+            connection.enabled = False
             #calls callback with connection as param to make it possible to persist invalid connections
             if self._callback is not None:
                 self._callback(connection, e)

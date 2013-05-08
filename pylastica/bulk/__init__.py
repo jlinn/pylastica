@@ -154,6 +154,37 @@ class Bulk(object):
             self.add_document(doc, op_type)
         return self
 
+    def add_raw_data(self, data):
+        """
+        Add raw bulk data according to the ES bulk protocol
+        @param data:
+        @type data: list of dict
+        @return:
+        @rtype: self
+        """
+        bulk_action = None
+        for row in data:
+            if isinstance(row, dict):
+                op_type = row.keys()[0]
+                metadata = row[op_type]
+                if pylastica.bulk.action.Action.is_valid_op_type(op_type):
+                    #add previous action
+                    if bulk_action is not None:
+                        self.add_action(bulk_action)
+                    bulk_action = pylastica.bulk.action.Action(op_type, metadata)
+                elif isinstance(bulk_action, pylastica.bulk.action.Action):
+                    bulk_action.source = row
+                    self.add_action(bulk_action)
+                    bulk_action = None
+                else:
+                    raise pylastica.exception.InvalidException("Invalid bulk data. Source must follow action metadata.")
+            else:
+                raise pylastica.exception.InvalidException("Invalid bulk data. Should be list of dict, Document, or Bulk.Action")
+        #add last action if available
+        if bulk_action is not None:
+            self.add_action(bulk_action)
+        return self
+
     def to_string(self):
         """
 
@@ -216,7 +247,7 @@ class Bulk(object):
                 if isinstance(action, AbstractDocument):
                     document = action.document
                     if document.auto_populate or self._client.get_config_value(['document', 'autoPopulate'], False):
-                        if document.has_id() and '_id' in bulk_response_data:
+                        if not document.has_id() and '_id' in bulk_response_data:
                             document.doc_id = bulk_response_data['_id']
                         if '_version' in bulk_response_data:
                             document.version = bulk_response_data['_version']

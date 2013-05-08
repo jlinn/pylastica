@@ -4,20 +4,20 @@ __docformat__ = 'epytext'
 
 from . import bulk
 from .client import *
-# from .connection import *
+from .connection import *
 from .document import *
 from . import doc_type
 # from . import exception
 # from . import facet
 # from . import filter
-# from . import index
+from . import index
 # from .log import *
 # from .param import *
 # from . import query
-# from .request import *
+from .request import *
 # from .response import *
 from .resultset import *
-# from .script import *
+from .script import *
 # from .scriptfields import *
 from .search import *
 # from .searchable import *

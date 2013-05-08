@@ -1,11 +1,11 @@
 __author__ = 'Joe Linn'
 
 import json
-#import pylastica
 #from .abstractdocument import *
 # from .createdocument import *
 # from .deletedocument import *
 # from .indexdocument import *
+import pylastica.index
 
 class Action(object):
     OP_TYPE_CREATE = 'create'
@@ -60,6 +60,8 @@ class Action(object):
         @param metadata:
         @type metadata: dict
         """
+        if metadata is None:
+            metadata = {}
         self._metadata = metadata
 
     @property

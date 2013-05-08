@@ -1,7 +1,7 @@
 __author__ = 'Joe Linn'
 
 import pylastica.param
-import pylastica.exception
+#import pylastica.exception
 
 class Script(pylastica.param.Param):
     LANG_MVEL = 'mvel'
@@ -19,6 +19,7 @@ class Script(pylastica.param.Param):
         @param lang: script language
         @type lang: str
         """
+        super(Script, self).__init__()
         self._script = script
         self._lang = lang
         if params is not None:
