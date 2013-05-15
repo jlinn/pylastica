@@ -3,7 +3,7 @@ __author__ = 'Joe Linn'
 import pylastica
 
 class Mapping(object):
-    def __init__(self, type=None, properties=None):
+    def __init__(self, doc_type=None, properties=None):
         """
 
         @param type: optional DocType object
@@ -12,7 +12,11 @@ class Mapping(object):
         @type properties: dict
         """
         self._mapping = {}
-        #TODO: finish
+        self._type = None
+        if doc_type:
+            self.doc_type = doc_type
+        if properties:
+            self.set_properties(properties)
 
     @property
     def doc_type(self):
@@ -32,6 +36,16 @@ class Mapping(object):
         """
         assert isinstance(doc_type, pylastica.doc_type.DocType), "doc_type jmust be of type DocType: %r" % doc_type
         self._type = doc_type
+
+    def set_properties(self, properties):
+        """
+        Set mapping properties
+        @param properties:
+        @type properties: dict
+        @return:
+        @rtype: self
+        """
+        return self.set_param('properties', properties)
 
     def set_source(self, source):
         """

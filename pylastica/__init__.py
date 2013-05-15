@@ -4,6 +4,7 @@ __docformat__ = 'epytext'
 
 from . import bulk
 from .client import *
+from . import cluster
 from .connection import *
 from .document import *
 from . import doc_type
@@ -12,8 +13,9 @@ from . import doc_type
 # from . import filter
 from . import index
 # from .log import *
+from .node import *
 # from .param import *
-# from . import query
+from . import query
 from .request import *
 # from .response import *
 from .resultset import *

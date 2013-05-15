@@ -118,3 +118,6 @@ class ResultSet(object):
 
     def __iter__(self):
         return iter(self._results)
+
+    def __getitem__(self, item):
+        return self._results[item]

@@ -1,19 +1,12 @@
 __author__ = 'Joe Linn'
 
-import abc
 #import pylastica
 import pylastica.param
 import pylastica.filter
-# from .bool import *
-# from .constantscore import *
-# from .customfiltersscore import *
 
-# from .matchall import *
-#
-
-
-class AbstractQuery(pylastica.param.Param):
-    __metaclass__ = abc.ABCMeta
+from .abstract import *
+from .haschild import *
+from .matchall import *
 
 class Query(pylastica.param.Param):
     def __init__(self, query=None):
@@ -48,7 +41,7 @@ class Query(pylastica.param.Param):
             new_query.set_filter(query)
             return new_query
         elif query is None or query == '':
-            return cls(pylastica.query.MatchAll())
+            return cls(MatchAll())
         elif isinstance(query, str):
             from .querystring import QueryString
             return cls(QueryString(query))

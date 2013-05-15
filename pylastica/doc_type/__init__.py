@@ -134,7 +134,7 @@ class DocType(pylastica.searchable.Searchable):
         @rtype: pylastica.response.Response
         """
         mapping = pylastica.doc_type.Mapping.create(mapping)
-        mapping.type = self
+        mapping.doc_type = self
         return mapping.send()
 
     @property

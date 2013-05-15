@@ -78,6 +78,15 @@ class Result(object):
         """
         return self.get_param('_version')
 
+    @property
+    def data(self):
+        """
+        Returns result data
+        @return:
+        @rtype: dict
+        """
+        return self.get_data()
+
     def get_data(self):
         """
         Returns result data

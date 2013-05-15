@@ -248,7 +248,7 @@ class Index(pylastica.searchable.Searchable):
         """
         data = {'actions': []}
         if replace:
-            status = pylastica.status.Status(self.client)
+            status = Status(self)
             for index in status.get_indices_with_alias(name):
                 data['actions'].append({
                     'remove':{

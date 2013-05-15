@@ -1,16 +1,17 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from . import abstract
 
-class HasChild(pylastica.query.AbstractQuery):
+class HasChild(abstract.AbstractQuery):
     def __init__(self, query, doc_type=None):
         """
 
         @param query:
-        @type query: str or pylastica.query.Query or pylastica.query.AbstractQuery
+        @type query: str or pylastica.query.Query or pylastica.query.abstract.AbstractQuery
         @param doc_type: child document type
         @type doc_type: str
         """
+        super(HasChild, self).__init__()
         self.set_query(query)
         self.set_type(doc_type)
 
@@ -18,10 +19,11 @@ class HasChild(pylastica.query.AbstractQuery):
         """
         Set the query object
         @param query:
-        @type query: str or pylastica.query.Query or pylastica.query.AbstractQuery
+        @type query: str or pylastica.query.Query or pylastica.query.abstract.AbstractQuery
         @return:
         @rtype: self
         """
+        import pylastica.query
         query = pylastica.query.Query.create(query)
         data = query.to_dict()
         return self.set_param('query', data['query'])

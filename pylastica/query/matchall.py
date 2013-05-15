@@ -1,7 +1,8 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from . import abstract
 
-class MatchAll(pylastica.query.AbstractQuery):
+class MatchAll(abstract.AbstractQuery):
     def __init__(self):
+        super(MatchAll, self).__init__()
         self._params = {}
