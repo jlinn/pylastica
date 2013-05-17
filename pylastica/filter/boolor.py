@@ -1,8 +1,8 @@
 __author__ = 'Joe Linn'
 
-import pylastica.filter
+import pylastica.filter.abstractfilter
 
-class BoolOr(pylastica.filter.AbstractMulti):
+class BoolOr(pylastica.filter.abstractfilter.AbstractMulti):
     def _get_base_name(self):
         """
 

@@ -137,7 +137,7 @@ class Bulk(object):
         @return:
         @rtype: self
         """
-        from pylastica.bulk.action.abstractdocument import AbstractDocument
+        from pylastica.bulk.action import AbstractDocument
         return self.add_action(AbstractDocument.create(document, op_type))
 
     def add_documents(self, documents, op_type=None):
@@ -232,7 +232,7 @@ class Bulk(object):
         @return:
         @rtype: pylastica.bulk.responseset.ResponseSet
         """
-        from pylastica.bulk.action.abstractdocument import AbstractDocument
+        from pylastica.bulk.action import AbstractDocument
         response_data = response.data
         actions = self.actions
         bulk_responses = []

@@ -1,8 +1,8 @@
 __author__ = 'Joe Linn'
 
-import pylastica.filter
+import pylastica.filter.abstractfilter
 
-class BoolNot(pylastica.filter.AbstractFilter):
+class BoolNot(pylastica.filter.abstractfilter.AbstractFilter):
     def __init__(self, filter_object):
         self.set_filter(filter_object)
 

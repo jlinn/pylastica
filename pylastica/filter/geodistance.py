@@ -1,8 +1,8 @@
 __author__ = 'Joe Linn'
 
-import pylastica.filter
+import pylastica.filter.abstractfilter
 
-class GeoDistance(pylastica.filter.AbstractGeoDistance):
+class GeoDistance(pylastica.filter.abstractfilter.AbstractGeoDistance):
     DISTANCE_TYPE_ARC = 'arc'
     DISTANCE_TYPE_PLANE = 'plane'
 

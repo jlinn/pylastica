@@ -1,9 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica.filter
+import pylastica.filter.abstractfilter
 import pylastica.exception
 
-class GeoPolygon(pylastica.filter.AbstractFilter):
+class GeoPolygon(pylastica.filter.abstractfilter.AbstractFilter):
     def __init__(self, key, points):
         """
         @param key:

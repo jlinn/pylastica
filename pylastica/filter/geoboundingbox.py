@@ -1,9 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica.filter
+import pylastica.filter.abstractfilter
 import pylastica.exception
 
-class GeoBoundingBox(pylastica.filter.AbstractFilter):
+class GeoBoundingBox(pylastica.filter.abstractfilter.AbstractFilter):
     def __init__(self, key, coordinates):
         """
         @param key:

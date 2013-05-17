@@ -97,7 +97,7 @@ class DocType(pylastica.searchable.Searchable):
             result = self.request(path, pylastica.request.Request.GET, query=options).data
         except pylastica.exception.ResponseException:
             raise pylastica.exception.NotFoundException("Document with id %s not found." % doc_id)
-        if result['exists'] is None or result['exists'] == '':
+        if result['exists'] is None or result['exists'] == '' or not result['exists']:
             raise pylastica.exception.NotFoundException("Document with id %s not found." % doc_id)
         data = result['_source'] if '_source' in result else {}
         document = pylastica.document.Document(doc_id, data, self.name, self.index)
@@ -108,13 +108,13 @@ class DocType(pylastica.searchable.Searchable):
         """
 
         @param doc_id:
-        @type doc_id: str
+        @type doc_id: str or int
         @param data:
         @type data: dict or str
         @return:
         @rtype: pylastica.document.Document
         """
-        return pylastica.document.Document(doc_id, data, doc_type=self)
+        return pylastica.document.Document(doc_id, data, doc_type=self, index=self.index)
 
     @property
     def name(self):

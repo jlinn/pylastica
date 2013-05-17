@@ -82,3 +82,13 @@ class ResponseSet(pylastica.response.Response):
         @rtype: int
         """
         return len(self.bulk_responses)
+
+    def __getitem__(self, item):
+        """
+
+        @param item:
+        @type item: int
+        @return:
+        @rtype: pylastica.bulk.response.Response
+        """
+        return self.bulk_responses[item]

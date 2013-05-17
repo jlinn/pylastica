@@ -1,8 +1,8 @@
 __author__ = 'Joe Linn'
 
-import pylastica.filter
+import pylastica.filter.abstractfilter
 
-class Exists(pylastica.filter.AbstractFilter):
+class Exists(pylastica.filter.abstractfilter.AbstractFilter):
     """
     @see http://www.elasticsearch.org/guide/reference/query-dsl/exists-filter.html
     """

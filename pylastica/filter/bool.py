@@ -1,9 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica.filter
+import pylastica.filter.abstractfilter
 import pylastica.exception
 
-class Bool(pylastica.filter.AbstractFilter):
+class Bool(pylastica.filter.abstractfilter.AbstractFilter):
     def __init__(self):
         self._boost = 1.0
         self._must = []
