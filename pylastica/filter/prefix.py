@@ -1,8 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica.filter.abstractfilter
+#import pylastica.filter.abstractfilter
+from .abstractfilter import AbstractFilter
 
-class Prefix(pylastica.filter.abstractfilter.AbstractFilter):
+class Prefix(AbstractFilter):
     def __init__(self, field='', prefix=''):
         """
         @param field: field name

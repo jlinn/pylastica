@@ -1,9 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica.query
+from .abstract import AbstractQuery
 import pylastica.exception
 
-class Bool(pylastica.query.AbstractQuery):
+class Bool(AbstractQuery):
     def add_should(self, args):
         """
         Add should part to query
@@ -44,7 +44,7 @@ class Bool(pylastica.query.AbstractQuery):
         @return:
         @rtype: bool
         """
-        if isinstance(args, pylastica.query.AbstractQuery):
+        if isinstance(args, AbstractQuery):
             args = args.to_dict()
         assert isinstance(args, dict), "Invalid parameter. Must be array or instance of pylastica.query.AbstractQuery: %r" % args
         return self.add_param(type, args)

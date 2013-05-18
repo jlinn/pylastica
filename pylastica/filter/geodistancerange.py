@@ -1,9 +1,10 @@
 __author__ = 'Joe Linn'
 
-import pylastica.filter.abstractfilter
+#import pylastica.filter.abstractfilter
+from .abstractfilter import AbstractGeoDistance
 import pylastica.exception
 
-class GeoDistanceRange(pylastica.filter.abstractfilter.AbstractGeoDistance):
+class GeoDistanceRange(AbstractGeoDistance):
     RANGE_FROM = 'from'
     RANGE_TO = 'to'
     RANGE_LT = 'lt'

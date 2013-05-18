@@ -1,8 +1,10 @@
 __author__ = 'Joe Linn'
 
-import pylastica.filter.abstractfilter
+#import pylastica.filter.abstractfilter
+import pylastica.doc_type
+from .abstractfilter import AbstractFilter
 
-class Ids(pylastica.filter.abstractfilter.AbstractFilter):
+class Ids(AbstractFilter):
     def __init__(self, doc_type=None, ids=None):
         """
 

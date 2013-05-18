@@ -51,6 +51,7 @@ class AbstractGeoDistance(AbstractFilter):
         @param location: location as dict or geohash {'lat':40.3, 'lon':45.2}
         @type location: dict or str
         """
+        super(AbstractGeoDistance, self).__init__()
         self._location_type = None
         self._key = None
         self._latitude = None
@@ -156,8 +157,8 @@ class AbstractGeoDistance(AbstractFilter):
 
 class AbstractMulti(AbstractFilter):
     def __init__(self):
-        self._filters = []
         super(AbstractMulti, self).__init__()
+        self._filters = []
 
     def add_filter(self, filter_object):
         """
@@ -168,7 +169,7 @@ class AbstractMulti(AbstractFilter):
         @rtype: self
         """
         assert isinstance(filter_object, AbstractFilter), "filter must be an instance of an implementation of AbstractFilter: %r" % filter_object
-        self._filters.append(filter_object)
+        self._filters.append(filter_object.to_dict())
         return self
 
     def set_filters(self, filters):

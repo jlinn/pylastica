@@ -1,8 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica.filter.abstractfilter
+#import pylastica.filter.abstractfilter
+from .abstractfilter import AbstractFilter
 
-class Query(pylastica.filter.abstractfilter.AbstractFilter):
+class Query(AbstractFilter):
     def __init__(self, query=None):
         """
 

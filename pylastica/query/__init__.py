@@ -1,12 +1,15 @@
 __author__ = 'Joe Linn'
 
-#import pylastica
 import pylastica.param
 import pylastica.filter
 
 from .abstract import *
+from .bool import *
+from .customscore import *
 from .haschild import *
 from .matchall import *
+from .term import *
+
 
 class Query(pylastica.param.Param):
     def __init__(self, query=None):
@@ -228,6 +231,8 @@ class Query(pylastica.param.Param):
         @rtype: self
         """
         assert isinstance(facet, pylastica.facet.AbstractFacet), "facet must be an instance of an implementation of AbstractFacet: %r" % facet
+        if 'facets' not in self._params:
+            self._params['facets'] = {}
         self._params['facets'][facet.name] = facet.to_dict()
         return self
 

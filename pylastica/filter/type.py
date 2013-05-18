@@ -1,8 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica.filter.abstractfilter
+#import pylastica.filter.abstractfilter
+from .abstractfilter import AbstractFilter
 
-class DocType(pylastica.filter.abstractfilter.AbstractFilter):
+class DocType(AbstractFilter):
     def __init__(self, type_name=None):
         """
         @param type_name: document type name

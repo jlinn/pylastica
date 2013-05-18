@@ -1,8 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from .abstract import AbstractQuery
+import pylastica.script
 
-class CustomScore(pylastica.query.AbstractQuery):
+class CustomScore(AbstractQuery):
     def __init__(self, script=None, query=None):
         """
 
@@ -11,6 +12,7 @@ class CustomScore(pylastica.query.AbstractQuery):
         @param query:
         @type query: str or pylastica.query.AbstractQuery
         """
+        super(CustomScore, self).__init__()
         if script is not None:
             self.set_script(script)
         self.set_query(query)

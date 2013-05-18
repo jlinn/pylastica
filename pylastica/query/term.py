@@ -1,14 +1,15 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from .abstract import AbstractQuery
 
-class Term(pylastica.query.AbstractQuery):
+class Term(AbstractQuery):
     def __init__(self, term=None):
         """
 
         @param term: optional
         @type term: dict
         """
+        super(Term, self).__init__()
         self.set_raw_term(term)
 
     def set_raw_term(self, term):

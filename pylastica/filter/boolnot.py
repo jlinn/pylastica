@@ -1,9 +1,11 @@
 __author__ = 'Joe Linn'
 
-import pylastica.filter.abstractfilter
+#import pylastica.filter.abstractfilter
+from .abstractfilter import AbstractFilter
 
-class BoolNot(pylastica.filter.abstractfilter.AbstractFilter):
+class BoolNot(AbstractFilter):
     def __init__(self, filter_object):
+        super(BoolNot, self).__init__()
         self.set_filter(filter_object)
 
     def set_filter(self, filter_object):
@@ -14,7 +16,7 @@ class BoolNot(pylastica.filter.abstractfilter.AbstractFilter):
         @return:
         @rtype: self
         """
-        assert isinstance(filter_object, pylastica.filter.AbstractFilter), "filter_object must be in instance of an implementation of AbstractFilter: %r" % filter_object
+        assert isinstance(filter_object, AbstractFilter), "filter_object must be in instance of an implementation of AbstractFilter: %r" % filter_object
         return self.set_param('filter',filter_object.to_dict())
 
     def _get_base_name(self):

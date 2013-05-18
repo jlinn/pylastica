@@ -1,8 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica.filter.abstractfilter
+#import pylastica.filter.abstractfilter
+from .abstractfilter import AbstractFilter
 
-class Range(pylastica.filter.abstractfilter.AbstractFilter):
+class Range(AbstractFilter):
     def __init__(self, field_name=None, args=None):
         """
 

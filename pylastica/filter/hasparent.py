@@ -1,9 +1,10 @@
 __author__ = 'Joe Linn'
 
-import pylastica.filter.abstractfilter
+#import pylastica.filter.abstractfilter
+from .abstractfilter import AbstractFilter
 import pylastica.query
 
-class HasParent(pylastica.filter.abstractfilter.AbstractFilter):
+class HasParent(AbstractFilter):
     def __init__(self, query, doc_type):
         """
 
@@ -28,7 +29,7 @@ class HasParent(pylastica.filter.abstractfilter.AbstractFilter):
         data = query.to_dict()
         return self.set_param('query', data['query'])
 
-    def set_type(self, doc_type):
+    def set_doc_type(self, doc_type):
         """
         Set the type of the parent document
         @param doc_type: parent doc type

@@ -1,9 +1,10 @@
 __author__ = 'Joe Linn'
 
-import pylastica.filter.abstractfilter
+#import pylastica.filter.abstractfilter
+from .abstractfilter import AbstractFilter
 import pylastica.exception
 
-class Bool(pylastica.filter.abstractfilter.AbstractFilter):
+class Bool(AbstractFilter):
     def __init__(self):
         self._boost = 1.0
         self._must = []
@@ -51,7 +52,7 @@ class Bool(pylastica.filter.abstractfilter.AbstractFilter):
         @return:
         @rtype: self
         """
-        if isinstance(args, pylastica.filter.AbstractFilter):
+        if isinstance(args, pylastica.filter.abstractfilter.AbstractFilter):
             args = args.to_dict()
         assert isinstance(args, dict), "Invalid parameter. Must be a dict or instance of implementation of AbstractFilter."
         var_name = '_' + type

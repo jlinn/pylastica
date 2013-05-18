@@ -1,6 +1,8 @@
 __author__ = 'Joe Linn'
 
-import pylastica.filter.abstractfilter
+#import pylastica.filter.abstractfilter
+from .abstractfilter import AbstractFilter
 
-class MatchAll(pylastica.filter.abstractfilter.AbstractFilter):
+
+class MatchAll(AbstractFilter):
     pass

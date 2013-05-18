@@ -1,8 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica.filter.abstractfilter
+#import pylastica.filter.abstractfilter
+from .abstractfilter import AbstractFilter
 
-class Limit(pylastica.filter.abstractfilter.AbstractFilter):
+class Limit(AbstractFilter):
     def __init__(self, limit):
         """
         @param limit: limit

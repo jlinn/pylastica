@@ -9,7 +9,7 @@ from .connection import *
 from .document import *
 from . import doc_type
 from . import exception
-# from . import facet
+from . import facet
 from . import filter
 from . import index
 # from .log import *

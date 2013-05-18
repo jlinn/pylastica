@@ -98,5 +98,3 @@ class ResponseException(AbstractException):
 class RuntimeException(AbstractException):
     pass
 
-#from . import bulk
-#from . import connection
