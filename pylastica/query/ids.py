@@ -1,8 +1,10 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from .abstract import AbstractQuery
+import pylastica.doc_type
 
-class Ids(pylastica.query.AbstractQuery):
+
+class Ids(AbstractQuery):
     def __init__(self, doc_type=None, ids=None):
         """
         @param doc_type: document type
@@ -10,8 +12,11 @@ class Ids(pylastica.query.AbstractQuery):
         @param ids: document ids
         @type ids: list of str
         """
-        self.set_type(doc_type)
-        self.set_ids(ids)
+        super(Ids, self).__init__()
+        if doc_type is not None:
+            self.set_type(doc_type)
+        if ids is not None:
+            self.set_ids(ids)
 
     def add_id(self, doc_id):
         """

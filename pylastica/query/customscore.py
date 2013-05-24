@@ -33,7 +33,7 @@ class CustomScore(AbstractQuery):
         """
         Set the script
         @param script:
-        @type script: str or pylastica.script.Script
+        @type script: str or pylastica.script.Script or dict
         @return:
         @rtype: self
         """

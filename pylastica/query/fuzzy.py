@@ -1,8 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from .abstract import AbstractQuery
+import pylastica.exception
 
-class Fuzzy(pylastica.query.AbstractQuery):
+class Fuzzy(AbstractQuery):
     def __init__(self, field_name=None, value=None):
         """
         Set either both parameters or neither.
@@ -11,6 +12,7 @@ class Fuzzy(pylastica.query.AbstractQuery):
         @param value: search string
         @type value: str
         """
+        super(Fuzzy, self).__init__()
         if field_name and value:
             self.set_field(field_name, value)
 

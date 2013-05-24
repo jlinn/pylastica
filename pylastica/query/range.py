@@ -1,9 +1,21 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from .abstract import AbstractQuery
 
-class Range(pylastica.query.AbstractQuery):
+
+class Range(AbstractQuery):
+    """
+    @see: http://www.elasticsearch.org/guide/reference/query-dsl/range-query/
+    """
     def __init__(self, field_name=None, args=None):
+        """
+
+        @param field_name:
+        @type field_name: str
+        @param args:
+        @type args: dict
+        """
+        super(Range, self).__init__()
         if field_name:
             self.add_field(field_name, args)
 

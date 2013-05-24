@@ -10,7 +10,8 @@ class Term(AbstractQuery):
         @type term: dict
         """
         super(Term, self).__init__()
-        self.set_raw_term(term)
+        if term is not None:
+            self.set_raw_term(term)
 
     def set_raw_term(self, term):
         """

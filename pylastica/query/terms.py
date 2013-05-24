@@ -1,8 +1,10 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from .abstract import AbstractQuery
+import pylastica.exception
 
-class Terms(pylastica.query.AbstractQuery):
+
+class Terms(AbstractQuery):
     def __init__(self, key='', terms=None):
         """
         Construct terms query
@@ -11,6 +13,7 @@ class Terms(pylastica.query.AbstractQuery):
         @param terms: terms list
         @type terms: list
         """
+        super(Terms, self).__init__()
         self.set_terms(key, terms)
 
     def set_terms(self, key, terms):

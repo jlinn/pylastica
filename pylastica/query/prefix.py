@@ -1,21 +1,22 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from .abstract import AbstractQuery
 
-class Prefix(pylastica.query.AbstractQuery):
+class Prefix(AbstractQuery):
     def __init__(self, prefix=None):
         """
 
         @param prefix:
         @type prefix: dict of str
         """
+        super(Prefix, self).__init__()
         self.set_raw_prefix(prefix)
 
     def set_raw_prefix(self, prefix):
         """
         Set values for the prefix
         @param prefix:
-        @type prefix: dict of str
+        @type prefix: dict
         @return:
         @rtype: self
         """

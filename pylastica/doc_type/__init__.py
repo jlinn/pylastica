@@ -174,7 +174,7 @@ class DocType(pylastica.searchable.Searchable):
         """
         Searches results for a query
         @param query: dict with all query data or a Query object
-        @type query: str or dict or pylastica.query.Query
+        @type query: str or dict or pylastica.query.Query or pylastica.query.AbstractQuery
         @param options:
         @type options: dict
         @return: result set with all results

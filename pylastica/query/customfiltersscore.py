@@ -1,8 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+#import pylastica
+from .abstract import AbstractQuery
 
-class CustomFiltersScore(pylastica.query.AbstractQuery):
+class CustomFiltersScore(AbstractQuery):
     SCORE_MODE_FIRST = 'first'
     SCORE_MODE_MIN = 'min'
     SCORE_MODE_MAX = 'max'
@@ -16,6 +17,7 @@ class CustomFiltersScore(pylastica.query.AbstractQuery):
         @param query:
         @type query: dict or pylastica.query.Query
         """
+        super(CustomFiltersScore, self).__init__()
         self.set_query(query)
 
     def set_query(self, query):

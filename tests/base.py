@@ -4,6 +4,11 @@ import pylastica
 
 class Base(object):
     def _get_client(self):
+        """
+
+        @return:
+        @rtype: pylastica.Client
+        """
         return pylastica.Client('es1.vr')
 
     def _create_index(self, name='test'):

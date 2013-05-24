@@ -1,8 +1,8 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from .abstract import AbstractQuery
 
-class Wildcard(pylastica.query.AbstractQuery):
+class Wildcard(AbstractQuery):
     def __init__(self, key='', value=None, boost=1.0):
         """
 
@@ -13,6 +13,7 @@ class Wildcard(pylastica.query.AbstractQuery):
         @param boost:
         @type boost: float
         """
+        super(Wildcard, self).__init__()
         if key != '':
             self.set_value(key, value, boost)
 

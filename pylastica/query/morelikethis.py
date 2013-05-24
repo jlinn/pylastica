@@ -1,8 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from .abstract import AbstractQuery
 
-class MoreLikeThis(pylastica.query.AbstractQuery):
+
+class MoreLikeThis(AbstractQuery):
     def set_fields(self, fields):
         """
         Set fields for this query

@@ -1,8 +1,8 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from .abstract import AbstractQuery
 
-class MultiMatch(pylastica.query.AbstractQuery):
+class MultiMatch(AbstractQuery):
     def set_query(self, query=None):
         """
         Set the query string

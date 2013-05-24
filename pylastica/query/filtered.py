@@ -1,8 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from .abstract import AbstractQuery
+import pylastica.filter.abstractfilter
 
-class Filtered(pylastica.query.AbstractQuery):
+class Filtered(AbstractQuery):
     def __init__(self, query, filter):
         """
 
@@ -11,6 +12,7 @@ class Filtered(pylastica.query.AbstractQuery):
         @param filter:
         @type filter: pylastica.filter.AbstractFilter
         """
+        super(Filtered, self).__init__()
         self.query = query
         self.filter = filter
 
@@ -30,7 +32,7 @@ class Filtered(pylastica.query.AbstractQuery):
         @param query:
         @type query: pylastica.query.AbstractQuery
         """
-        assert isinstance(query, pylastica.query.AbstractQuery), "query must be instance of implementation of AbstractQuery: %r" % query
+        assert isinstance(query, AbstractQuery), "query must be instance of implementation of AbstractQuery: %r" % query
         self._query = query
 
     @property
@@ -49,7 +51,7 @@ class Filtered(pylastica.query.AbstractQuery):
         @param filter:
         @type filter: pylastica.filter.AbstractFilter
         """
-        assert isinstance(filter, pylastica.filter.AbstractFilter), "filter must be instance of implementation of AbstractFilter: %r" % filter
+        assert isinstance(filter, pylastica.filter.abstractfilter.AbstractFilter), "filter must be instance of implementation of AbstractFilter: %r" % filter
         self._filter = filter
 
     def to_dict(self):
@@ -59,6 +61,8 @@ class Filtered(pylastica.query.AbstractQuery):
         @rtype: dict
         """
         return {
-            'query': self.query.to_dict(),
-            'filter': self.filter.to_dict()
+            'filtered':{
+                'query': self.query.to_dict(),
+                'filter': self.filter.to_dict()
+            }
         }

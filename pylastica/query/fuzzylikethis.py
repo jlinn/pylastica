@@ -1,9 +1,10 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from .abstract import AbstractQuery
 
-class FuzzyLikeThis(pylastica.query.AbstractQuery):
+class FuzzyLikeThis(AbstractQuery):
     def __init__(self):
+        super(FuzzyLikeThis, self).__init__()
         self._fields = []
         self._like_text = ''
         self._ignore_tf = False
@@ -11,7 +12,6 @@ class FuzzyLikeThis(pylastica.query.AbstractQuery):
         self._min_similarity = 0.5
         self._prefix_length = 0
         self._boost = 1.0
-        super(FuzzyLikeThis, self).__init__()
 
     def set_fields(self, fields):
         """
@@ -104,7 +104,7 @@ class FuzzyLikeThis(pylastica.query.AbstractQuery):
         if self._like_text:
             args['like_text'] = self._like_text
         args['min_similarity'] = self._min_similarity if self._min_similarity > 0 else 0
-        args['prefix_legnth'] = self._prefix_length
+        args['prefix_length'] = self._prefix_length
         args['ignore_tf'] = self._ignore_tf
         args['max_query_terms'] = self._max_query_terms
         return {'fuzzy_like_this': args}

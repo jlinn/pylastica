@@ -1,14 +1,16 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from .abstract import AbstractQuery
 
-class Simple(pylastica.query.AbstractQuery):
+
+class Simple(AbstractQuery):
     def __init__(self, query):
         """
         Constructs a query from a dict
         @param query:
         @type query: dict
         """
+        super(Simple, self).__init__()
         self.set_query(query)
 
     def set_query(self, query):

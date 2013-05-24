@@ -1,8 +1,8 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from .abstract import AbstractQuery
 
-class Match(pylastica.query.AbstractQuery):
+class Match(AbstractQuery):
     def set_field(self, field, values):
         """
         Set the param for the message array

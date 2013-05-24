@@ -1,10 +1,10 @@
 __author__ = 'Joe Linn'
 
-#import pylastica
-import pylastica.query
+from .abstract import AbstractQuery
 
-class QueryString(pylastica.query.AbstractQuery):
-    def __init__(self, query_string=None):
+
+class QueryString(AbstractQuery):
+    def __init__(self, query_string=''):
         """
         @param query_string: optional query string
         @type query_string: str

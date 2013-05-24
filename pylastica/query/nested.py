@@ -1,8 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from .abstract import AbstractQuery
 
-class Nested(pylastica.query.AbstractQuery):
+
+class Nested(AbstractQuery):
     SCORE_MODE_AVG = 'avg'
     SCORE_MODE_TOTAL = 'total'
     SCORE_MODE_MAX = 'max'
@@ -26,7 +27,7 @@ class Nested(pylastica.query.AbstractQuery):
         @return:
         @rtype: self
         """
-        assert isinstance(query, pylastica.query.AbstractQuery), "query must be an instance of an implementation of AbstractQuery: %r" % query
+        assert isinstance(query, AbstractQuery), "query must be an instance of an implementation of AbstractQuery: %r" % query
         return self.set_param('query', query.to_dict())
 
     def set_score_mode(self, mode):

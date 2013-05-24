@@ -184,7 +184,7 @@ class Index(pylastica.searchable.Searchable):
         """
         Searches this index
         @param query: dict of query data or Query object
-        @type query: string or dict or pylastica.query.Query
+        @type query: string or dict or pylastica.query.Query or pylastica.query.AbstractQuery
         @param options: optional dict of options or integer result limit
         @type options: dict or int
         @return:

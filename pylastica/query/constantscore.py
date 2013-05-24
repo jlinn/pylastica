@@ -1,14 +1,16 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from .abstract import *
 
-class ConstantScore(pylastica.query.AbstractQuery):
+
+class ConstantScore(AbstractQuery):
     def __init__(self, filter=None):
         """
 
         @param filter:
         @type filter: dict or pylastica.filter.AbstractFilter
         """
+        super(ConstantScore, self).__init__()
         if filter is not None:
             self.set_filter(filter)
 

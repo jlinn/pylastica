@@ -1,8 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from .abstract import AbstractQuery
 
-class Text(pylastica.query.AbstractQuery):
+
+class Text(AbstractQuery):
     def set_field(self, field, values):
         """
         Set the field for this query
@@ -23,7 +24,7 @@ class Text(pylastica.query.AbstractQuery):
         @param key:
         @type key: str
         @param value:
-        @type value: str
+        @type value: str or int
         @return:
         @rtype: self
         """

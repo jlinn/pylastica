@@ -1,8 +1,9 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+from .abstract import AbstractQuery
+from .query import Query
 
-class HasParent(pylastica.query.AbstractQuery):
+class HasParent(AbstractQuery):
     def __init__(self, query, doc_type=None):
         """
 
@@ -11,6 +12,7 @@ class HasParent(pylastica.query.AbstractQuery):
         @param doc_type: parent document type
         @type doc_type: str
         """
+        super(HasParent, self).__init__()
         self.set_query(query)
         self.set_type(doc_type)
 
@@ -22,7 +24,7 @@ class HasParent(pylastica.query.AbstractQuery):
         @return:
         @rtype: self
         """
-        query = pylastica.query.Query.create(query)
+        query = Query.create(query)
         data = query.to_dict()
         return self.set_param('query', data['query'])
 
