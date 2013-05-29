@@ -10,7 +10,7 @@ class GeoPolygon(AbstractFilter):
         @param key:
         @type key: str
         @param points: points making up the polygon [{'lat': float, 'lon': float}]
-        @type points: list of dict
+        @type points: list of list or list of dict
         """
         super(GeoPolygon, self).__init__()
         self._key = key

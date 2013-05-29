@@ -3,7 +3,6 @@ __author__ = 'Joe Linn'
 import urllib
 import urllib2
 import json
-#import pylastica
 import pylastica.transport
 
 class Http(pylastica.transport.AbstractTransport):

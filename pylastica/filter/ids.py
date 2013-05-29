@@ -43,7 +43,7 @@ class Ids(AbstractFilter):
         """
         Set the document type
         @param doc_type: doc type
-        @type doc_type: str or pylastica.doc_type.DocType
+        @type doc_type: str or pylastica.doc_type.DocType or list of str
         @return:
         @rtype: self
         """

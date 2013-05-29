@@ -1,6 +1,7 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+import pylastica.index
+
 
 class Percolator(object):
 

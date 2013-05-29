@@ -93,7 +93,7 @@ class Result(object):
         @return:
         @rtype: dict
         """
-        if 'fields' in self._hit and '_source' in self._hit:
+        if 'fields' in self._hit and '_source' not in self._hit:
             return self.get_fields()
         else:
             return self.get_source()

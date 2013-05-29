@@ -1,5 +1,6 @@
 __author__ = 'Joe Linn'
 
+
 class Stats(object):
     def __init__(self, node):
         """

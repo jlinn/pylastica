@@ -1,9 +1,9 @@
 __author__ = 'Joe Linn'
 
 import abc
-#import pylastica
-#from .http import *
 import pylastica.param
+import pylastica.util
+
 
 class AbstractTransport(pylastica.param.Param):
     __metaclass__ = abc.ABCMeta

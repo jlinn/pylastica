@@ -41,6 +41,15 @@ class ResultSet(object):
         """
         return self._results
 
+    @property
+    def results(self):
+        """
+
+        @return:
+        @rtype: list of pylastica.result.Result
+        """
+        return self.get_results()
+
     def has_facets(self):
         """
         Determine whether or not this result set has facets
@@ -120,4 +129,11 @@ class ResultSet(object):
         return iter(self._results)
 
     def __getitem__(self, item):
+        """
+
+        @param item:
+        @type item: int
+        @return:
+        @rtype: pylastica.result.Result
+        """
         return self._results[item]

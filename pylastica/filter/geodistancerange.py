@@ -15,16 +15,16 @@ class GeoDistanceRange(AbstractGeoDistance):
     RANGE_INCLUDE_LOWER = 'include_lower'
     RANGE_INCLUDE_UPPER = 'include_upper'
 
-    def __init__(self, key, location, lower=None, upper=None, include_lower=False, include_upper=False):
+    def __init__(self, key, location, lower=None, upper=None, include_lower=True, include_upper=True):
         """
         @param key:
         @type key: str
         @param location: location as dict or geohash {'lat':40.3, 'lon':45.2}
         @type location: dict or str
         @param lower: lower bound of range
-        @type lower: float or int
+        @type lower: float or int or str
         @param upper: upper bound of range
-        @type upper: float or int
+        @type upper: float or int or str
         @param include_lower:
         @type include_lower: bool
         @param include_upper:
@@ -39,9 +39,9 @@ class GeoDistanceRange(AbstractGeoDistance):
     def set_range(self, lower=None, upper=None, include_lower=False, include_upper=False):
         """
         @param lower: lower bound of range
-        @type lower: float or int
+        @type lower: float or int or str
         @param upper: upper bound of range
-        @type upper: float or int
+        @type upper: float or int or str
         @param include_lower:
         @type include_lower: bool
         @param include_upper:

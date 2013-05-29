@@ -252,5 +252,3 @@ class Query(pylastica.param.Param):
         """
         assert isinstance(min_score, int) or isinstance(min_score, float), "min_score must be either a float or int: %r" % min_score
         return self.set_param('min_score', min_score)
-
-

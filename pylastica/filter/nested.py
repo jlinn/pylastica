@@ -1,7 +1,8 @@
 __author__ = 'Joe Linn'
 
-#import pylastica.filter.abstractfilter
 from .abstractfilter import AbstractFilter
+import pylastica.query.abstract
+
 
 class Nested(AbstractFilter):
     SCORE_MODE_AVG = 'avg'

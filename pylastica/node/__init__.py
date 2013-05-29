@@ -2,6 +2,8 @@ __author__ = 'Joe Linn'
 
 import pylastica.client
 from .info import *
+from .stats import *
+
 
 class Node(object):
     def __init__(self, name, client):

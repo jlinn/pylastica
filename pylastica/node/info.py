@@ -1,5 +1,6 @@
 __author__ = 'Joe Linn'
 
+
 class Info(object):
     def __init__(self, node, params=None):
         """
@@ -88,4 +89,4 @@ class Info(object):
         query = {param: True for param in params} if params is not None else None
         self._response = self.node.client.request("_cluster/nodes/%s" % self.node.name, query=query)
         data = self.response.data
-        self._data = data['nodes']
+        self._data = data['nodes'].items()[0][1]

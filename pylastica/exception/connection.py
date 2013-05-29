@@ -1,6 +1,5 @@
 __author__ = 'Joe Linn'
 
-#import pylastica
 import pylastica.exception
 
 class HttpException(pylastica.exception.ConnectionException):
@@ -39,5 +38,38 @@ class HttpException(pylastica.exception.ConnectionException):
         return self._error
 
 class ThriftException(pylastica.exception.ConnectionException):
-    pass
-    #TODO: implement thrift stuff
+    def __init__(self, thrift_exception, request=None, response=None, *args, **kwargs):
+        """
+
+        @param thrift_exception:
+        @type thrift_exception: thrift.Thrift.TException
+        @param request:
+        @type request: pylastica.request.Request
+        @param response:
+        @type response: pylastica.response.Response
+        @param args:
+        @type args:
+        @param kwargs:
+        @type kwargs:
+        """
+        self._thrift_exception = thrift_exception
+        message = self.error_message
+        super(ThriftException, self).__init__(message, request, response, *args, **kwargs)
+
+    @property
+    def error_message(self):
+        """
+
+        @return:
+        @rtype: str
+        """
+        return self.thrift_exception.message
+
+    @property
+    def thrift_exception(self):
+        """
+
+        @return:
+        @rtype: thrift.Thrift.TException
+        """
+        return self._thrift_exception

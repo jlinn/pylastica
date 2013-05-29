@@ -186,7 +186,7 @@ class DocType(pylastica.searchable.Searchable):
         """
         Counts results for a query. If no query is set, a MatchAll query is used.
         @param query: dict with all query data or a Query object
-        @type query: dict or pylastica.query.Query
+        @type query: dict or pylastica.query.Query or str
         @return: number of docs matching the query
         @rtype: int
         """

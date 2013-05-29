@@ -1,5 +1,6 @@
 __author__ = 'Joe Linn'
 
+import json
 import pylastica.exception
 import pylastica.util
 
@@ -108,3 +109,18 @@ class Param(object):
         """
         assert isinstance(params, dict), "params must be of type dict: %r" % params
         self._params = params
+
+    def __str__(self):
+        """
+        @return:
+        @rtype: str
+        """
+        return json.dumps(self.to_dict())
+
+    def __unicode__(self):
+        """
+
+        @return:
+        @rtype: unicode
+        """
+        return unicode(self.__str__())

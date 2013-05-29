@@ -85,7 +85,7 @@ class AbstractGeoDistance(AbstractFilter):
             else:
                 raise pylastica.exception.InvalidException("location['lat'] must be set.")
             if 'lon' in location:
-                self.set_location(location['lon'])
+                self.set_longitude(location['lon'])
             else:
                 raise pylastica.exception.InvalidException("location['lon'] must be set.")
         elif isinstance(location, str):

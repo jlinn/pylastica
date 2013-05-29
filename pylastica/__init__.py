@@ -13,14 +13,14 @@ from . import facet
 from . import filter
 from . import index
 # from .log import *
-from .node import *
+from . import node
 # from .param import *
 from . import query
 from .request import *
 # from .response import *
 from .resultset import *
 from .script import *
-# from .scriptfields import *
+from .scriptfields import *
 from .search import *
 # from .searchable import *
 # from . import transport
