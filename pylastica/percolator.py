@@ -51,6 +51,9 @@ class Percolator(object):
         """
         path = "%s/type/_percolate" % self._index.name
         data = {'doc': doc.data}
+        if query is not None:
+            query = pylastica.query.Query.create(query)
+            data['query'] = query.query
         response = self._index.client.request(path, data=data)
         data = response.data
         return data['matches']

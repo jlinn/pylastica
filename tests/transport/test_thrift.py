@@ -2,14 +2,15 @@ __author__ = 'Joe Linn'
 
 import unittest
 import pylastica
+from ..base import *
 
 
-class ThriftTest(unittest.TestCase):
+class ThriftTest(unittest.TestCase, Base):
     def setUp(self):
-        self._client = pylastica.Client('es1.vr', 9500, transport='ThriftTransport')
+        self._client = pylastica.Client(self._get_hosts()[0]['host'], 9500, transport='ThriftTransport')
 
     def test_construct(self):
-        host = 'es1.vr'
+        host = self._get_hosts()[0]['host']
         port = 9500
         client = pylastica.Client(host, port, transport='Thrift')
         self.assertEqual(host, client.get_connection().host)

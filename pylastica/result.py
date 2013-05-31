@@ -42,7 +42,7 @@ class Result(object):
         """
         Returns a list of fields
         @return:
-        @rtype: list
+        @rtype: dict
         """
         return self.get_param('fields')
 

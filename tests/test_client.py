@@ -2,8 +2,9 @@ __author__ = 'Joe Linn'
 
 import unittest
 import pylastica
+from .base import *
 
-class TestClient(unittest.TestCase):
+class TestClient(unittest.TestCase, Base):
     def test_connections(self):
         client = self._get_client()
         index = client.get_index('pylastica_test1')
@@ -26,10 +27,7 @@ class TestClient(unittest.TestCase):
         index.delete()
 
     def test_two_servers_one_client(self):
-        client = pylastica.Client(connections=[
-            {'host': 'es1.vr', 'port': 9200},
-            {'host': 'es2.vr', 'port': 9200}
-        ])
+        client = pylastica.Client(connections=self._get_hosts())
         index = client.get_index('pylastica_test1')
         index.create(options=True)
         doc_type = index.get_doc_type('user')
@@ -137,8 +135,8 @@ class TestClient(unittest.TestCase):
 
     def test_one_invalid_connection(self):
         client = self._get_client()
-        connection_1 = pylastica.Connection({'host': 'es1.vr', 'timeout': 2})
-        connection_2 = pylastica.Connection({'host': 'es10.vr', 'timeout': 2})
+        connection_1 = pylastica.Connection({'host': self._get_hosts()[0]['host'], 'timeout': 2})
+        connection_2 = pylastica.Connection({'host': 'es10', 'timeout': 2})
 
         client.connections = [connection_2, connection_1]
         client.request('_status', pylastica.Request.GET)
@@ -148,8 +146,8 @@ class TestClient(unittest.TestCase):
 
     def test_two_invalid_connections(self):
         client = self._get_client()
-        connection_1 = pylastica.Connection({'host': 'foo.vr', 'timeout': 2})
-        connection_2 = pylastica.Connection({'host': 'bar.vr', 'timeout': 2})
+        connection_1 = pylastica.Connection({'host': 'foo', 'timeout': 2})
+        connection_2 = pylastica.Connection({'host': 'bar', 'timeout': 2})
         client.connections = [connection_1, connection_2]
         self.assertRaises(pylastica.exception.ClientException, client.request, '_status', pylastica.Request.GET)
         connections = client.connections
@@ -164,9 +162,9 @@ class TestClient(unittest.TestCase):
             callback.count += 1
 
         callback.count = 0
-        client = pylastica.Client('es1.vr', callback=callback)
-        connection_1 = pylastica.Connection({'host': 'foo.vr', 'timeout': 2})
-        connection_2 = pylastica.Connection({'host': 'bar.vr', 'timeout': 2})
+        client = pylastica.Client(self._get_hosts()[0]['host'], callback=callback)
+        connection_1 = pylastica.Connection({'host': 'foo', 'timeout': 2})
+        connection_2 = pylastica.Connection({'host': 'bar', 'timeout': 2})
         client.connections = [connection_1, connection_2]
         self.assertEqual(0, callback.count)
         self.assertRaises(pylastica.exception.ClientException, client.request, '_status', pylastica.Request.GET)
@@ -268,7 +266,7 @@ class TestClient(unittest.TestCase):
         index.delete()
 
     def _get_client(self):
-        return pylastica.Client('es1.vr')
+        return pylastica.Client(self._get_hosts()[0]['host'])
 
     def _create_index(self, name='test'):
         """

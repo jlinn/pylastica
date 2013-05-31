@@ -1,9 +1,9 @@
 __author__ = 'Joe Linn'
 
-#import pylastica
 from . import action
 from .response import *
 from .responseset import *
+
 
 class Bulk(object):
     DELIMITER = "\n"

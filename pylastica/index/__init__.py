@@ -1,10 +1,10 @@
 __author__ = 'Joe Linn'
 
-#import pylastica
 import pylastica.searchable
 from .settings import *
 from .stats import *
 from .status import *
+
 
 class Index(pylastica.searchable.Searchable):
     def __init__(self, client, name):
@@ -16,6 +16,7 @@ class Index(pylastica.searchable.Searchable):
         @type name: str
         """
         assert isinstance(client, pylastica.client.Client), "client must be an instance of Client: %r" % client
+        name = str(name)
         assert isinstance(name, str), "name must be a str: %r" % name
         self._name = name
         self._client = client
@@ -248,7 +249,7 @@ class Index(pylastica.searchable.Searchable):
         """
         data = {'actions': []}
         if replace:
-            status = Status(self)
+            status = pylastica.Status(self.client)
             for index in status.get_indices_with_alias(name):
                 data['actions'].append({
                     'remove':{

@@ -47,7 +47,7 @@ class Status(object):
         @return:
         @rtype: list
         """
-        data = self.index.request('_aliases', pylastica.request.Request.GET)
+        data = self.index.request('_aliases', pylastica.request.Request.GET).data[self.index.name]
         if 'aliases' not in data:
             raise pylastica.exception.NotFoundException("Alias data for index %s not found." % self.index.name)
         return [name for name in data['aliases']]
@@ -61,6 +61,15 @@ class Status(object):
         @rtype: bool
         """
         return alias in self.aliases
+
+    @property
+    def settings(self):
+        """
+        @return: Index settings
+        @rtype: dict
+        """
+        response_data = self.index.request('_settings', pylastica.request.Request.GET).data
+        return response_data[self.index.name]['settings']
 
     @property
     def index(self):

@@ -40,5 +40,12 @@ class SettingsTest(unittest.TestCase, Base):
         self.assertEqual('2s', settings.get('refresh_interval'))
         index.delete()
 
+    def test_get_settings(self):
+        index = self._create_index('test')
+        settings = index.status.settings
+
+        self.assertTrue('index.number_of_shards' in settings)
+        index.delete()
+
 if __name__ == '__main__':
     unittest.main()

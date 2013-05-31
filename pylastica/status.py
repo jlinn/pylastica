@@ -11,9 +11,9 @@ class Status(object):
         """
         super(Status, self).__init__()
         self._client = client
-        self.refresh()
         self._data = None
         self._response = None
+        self.refresh()
 
     @property
     def data(self):
@@ -40,7 +40,7 @@ class Status(object):
         @return:
         @rtype: list of str
         """
-        return [name for name in self._data['indices']]
+        return [name for name in self._data['indices']] if len(self._data['indices']) else []
 
     def index_exists(self, name):
         """

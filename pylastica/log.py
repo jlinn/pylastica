@@ -1,20 +1,37 @@
 __author__ = 'Joe Linn'
 
-import pylastica
+import json
+import logging
+
 
 class Log(object):
-    def __init__(self):
+    def __init__(self, log=''):
+        """
+        @param log: file name for logging
+        @type log: str
+        """
+        super(Log, self).__init__()
         self._log = True #log path or True if enabled
         self._last_message = ''
-        super(Log, self).__init__()
+        self.set_log(log)
 
-    def log(self, message):
-        if isinstance(message, pylastica.Request):
-            message = str(message)
-        self._last_message = message
-        if self._log is not None and isinstance(self._log, str):
-            #TODO: logging stuff
-            pass
+    def log(self, level, message, context=None):
+        """
+
+        @param level: log level
+        @type level: str
+        @param message: message to log
+        @type message: str
+        @param context:
+        @type context: dict
+        @return:
+        @rtype: void
+        """
+        if context is None:
+            context = {}
+        context['error_message'] = message
+        self._last_message = json.dumps(context)
+        logging.log(level, message)
 
     def set_log(self, log):
         """
@@ -25,6 +42,9 @@ class Log(object):
         @rtype: self
         """
         self._log = log
+        if isinstance(log, str):
+            #set log file
+            logging.basicConfig(filename=log)
         return self
 
     @property

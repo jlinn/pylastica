@@ -156,3 +156,15 @@ class Response(object):
         if '_shards' not in data:
             raise pylastica.exception.NotFoundException("Unable to find the field '_shards' in the response.")
         return data['_shards']
+
+    @property
+    def scroll_id(self):
+        """
+        Get the _scroll value for the response
+        @return:
+        @rtype: str
+        """
+        data = self.data
+        if '_scroll_id' not in data:
+            raise pylastica.exception.NotFoundException("unable to find the field '_scroll_id' in the response.")
+        return data['_scroll_id']

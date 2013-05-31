@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-long_description = open('README.txt').read()
+long_description = open('README.markdown').read()
 
 packages = find_packages(exclude=["tests", "tests.*"])
 

@@ -15,13 +15,16 @@ from . import index
 # from .log import *
 from . import node
 # from .param import *
+from .percolator import *
 from . import query
 from .request import *
 # from .response import *
 from .resultset import *
+from . import river
 from .script import *
 from .scriptfields import *
 from .search import *
+from .status import *
 # from .searchable import *
 # from . import transport
 # from . import util

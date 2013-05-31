@@ -12,6 +12,8 @@ class Search(object):
     OPTION_TIMEOUT = 'timeout'
     OPTION_FROM = 'from'
     OPTION_SIZE = 'size'
+    OPTION_SCROLL = 'scroll'
+    OPTION_SCROLL_ID = 'scroll_id'
 
     SEARCH_TYPE_COUNT = 'count'
     SEARCH_TYPE_SCAN = 'scan'
@@ -206,7 +208,9 @@ class Search(object):
             self.OPTION_VERSION,
             self.OPTION_TIMEOUT,
             self.OPTION_FROM,
-            self.OPTION_SIZE
+            self.OPTION_SIZE,
+            self.OPTION_SCROLL,
+            self.OPTION_SCROLL_ID
         ]
         if key in valid_options:
             return True

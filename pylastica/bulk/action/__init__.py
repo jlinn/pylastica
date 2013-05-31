@@ -4,10 +4,12 @@ import abc
 import json
 import pylastica.index
 
+
 class Action(object):
     OP_TYPE_CREATE = 'create'
     OP_TYPE_INDEX = 'index'
     OP_TYPE_DELETE = 'delete'
+    #OP_TYPE_UPDATE = 'update'
 
     def __init__(self, op_type=OP_TYPE_INDEX, metadata=None, source=None):
         """
@@ -274,10 +276,11 @@ class AbstractDocument(Action):
             action = IndexDocument(document)
         return action
 
+
 class IndexDocument(AbstractDocument):
     def __init__(self, document):
-        self._op_type = self.OP_TYPE_INDEX
         super(IndexDocument, self).__init__(document)
+        self._op_type = self.OP_TYPE_INDEX
 
     @property
     def document(self):
@@ -320,10 +323,12 @@ class IndexDocument(AbstractDocument):
         metadata = document.get_options(params, True)
         return metadata
 
+
 class CreateDocument(IndexDocument):
     def __init__(self, document):
         super(CreateDocument, self).__init__(document)
         self._op_type = self.OP_TYPE_CREATE
+
 
 class DeleteDocument(AbstractDocument):
     def __init__(self, document):

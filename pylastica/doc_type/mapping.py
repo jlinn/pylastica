@@ -47,6 +47,17 @@ class Mapping(object):
         """
         return self.set_param('properties', properties)
 
+    def set_meta(self, meta):
+        """
+        Set mapping meta
+        @param meta:
+        @type meta: dict
+        @return:
+        @rtype: self
+        @see: http://www.elasticsearch.org/guide/reference/mapping/meta/
+        """
+        return self.set_param('_meta', meta)
+
     def set_source(self, source):
         """
         Sets source values
@@ -79,6 +90,26 @@ class Mapping(object):
         """
         self._mapping[key] = value
         return self
+
+    def set_all_field(self, params):
+        """
+        Set params for the '_all' field
+        @param params:
+        @type params: dict
+        @return:
+        @rtype: self
+        """
+        return self.set_param('_all', params)
+
+    def enable_all_field(self, enabled=True):
+        """
+        Enable (or disable) the '_all' field
+        @param enabled: Enabled if True, disabled if False. Defaults to True.
+        @type enabled: bool
+        @return:
+        @rtype: self
+        """
+        return self.set_all_field({'enabled': enabled})
 
     def set_ttl(self, params):
         """
