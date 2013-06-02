@@ -1,12 +1,12 @@
 from setuptools import setup, find_packages
 
-long_description = open('README.markdown').read()
+long_description = open('README.rst').read()
 
 packages = find_packages(exclude=["tests", "tests.*"])
 
 setup(
     name='pylastica',
-    version='0.1.0',
+    version='0.1.0+r2',
     packages=packages,
     url='https://github.com/jlinn/pylastica',
     license='LICENSE.txt',
