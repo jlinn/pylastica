@@ -18,4 +18,4 @@ before_script:
   - ./tests/bin/run_elasticsearch.sh
 
 # run tests
- script: nosetests
+script: nosetests
