@@ -8,7 +8,7 @@ setup(
     name='pylastica',
     version='0.1.0',
     packages=packages,
-    url='https://bitbucket.org/jlinn5732/pylastica',
+    url='https://github.com/jlinn/pylastica',
     license='LICENSE.txt',
     author='Joe Linn',
     author_email='',
