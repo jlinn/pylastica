@@ -16,7 +16,7 @@ setup(
     long_description=long_description,
     classifiers=[
         'Intended Audience :: Developers',
-        'Development Status :: 2 - Pre-Alpha'
+        'Development Status :: 2 - Pre-Alpha',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Topic :: Internet :: WWW/HTTP :: Indexing/Search'
