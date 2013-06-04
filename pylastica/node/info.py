@@ -78,6 +78,35 @@ class Info(object):
         """
         return self._response
 
+    @property
+    def plugins(self):
+        """
+        Return a list of the plugins installed on this node
+        @return:
+        @rtype: list of dict
+        """
+        if self._params is None or 'plugin' not in self._params:
+            #plugins were not retrieved when refresh() was called last. Get them now.
+            if isinstance(self._params, list):
+                self._params.append('plugin')
+            else:
+                self._params = ['plugin']
+            self.refresh(self._params)
+        return self.get('plugins')
+
+    def has_plugin(self, name):
+        """
+        Determine if the given plugin is installed on this node
+        @param name: name of the plugin
+        @type name: str
+        @return:
+        @rtype: bool
+        """
+        for plugin in self.plugins:
+            if plugin['name'] == name:
+                return True
+        return False
+
     def refresh(self, params=None):
         """
         Reload all node information. Must be called if said information has changed
@@ -86,6 +115,7 @@ class Info(object):
         @return:
         @rtype: pylastica.response.Response
         """
+        self._params = params
         query = {param: True for param in params} if params is not None else None
         self._response = self.node.client.request("_cluster/nodes/%s" % self.node.name, query=query)
         data = self.response.data

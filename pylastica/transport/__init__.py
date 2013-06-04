@@ -1,6 +1,7 @@
 __author__ = 'Joe Linn'
 
 import abc
+import copy
 import pylastica.param
 import pylastica.util
 
@@ -66,8 +67,10 @@ class AbstractTransport(pylastica.param.Param):
         @rtype: cls
         """
         if isinstance(transport, dict) and 'type' in transport:
-            transport_params = transport
+            transport_params = copy.deepcopy(transport)
             del transport_params['type']
+            if params is None:
+                params = {}
             params.update(transport_params)
             transport = transport['type']
         if isinstance(transport, str):

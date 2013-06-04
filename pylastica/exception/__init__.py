@@ -1,17 +1,20 @@
 __author__ = 'Joe Linn'
 
 import abc
-#import pylastica
 import pylastica.response
+
 
 class AbstractException(Exception):
     __metaclass__ = abc.ABCMeta
 
+
 class BulkException(AbstractException):
     pass
 
+
 class ClientException(AbstractException):
     pass
+
 
 class ConnectionException(AbstractException):
     def __init__(self, message, request=None, response=None, *args, **kwargs):
@@ -54,14 +57,18 @@ class ConnectionException(AbstractException):
         """
         return self._response
 
+
 class InvalidException(AbstractException):
     pass
+
 
 class NotFoundException(AbstractException):
     pass
 
+
 class NotImplementedException(AbstractException):
     pass
+
 
 class ResponseException(AbstractException):
     def __init__(self, request, response, *args, **kwargs):
@@ -97,4 +104,3 @@ class ResponseException(AbstractException):
 
 class RuntimeException(AbstractException):
     pass
-

@@ -131,7 +131,7 @@ class Index(pylastica.searchable.Searchable):
         @param options: bool: deletes index first if it exists (defaults to False); dict: dictionary of options
         @type options: bool or dict
         @return: server response
-        @rtype: dict
+        @rtype: pylastica.response.Response
         """
         path = ''
         query = {}
@@ -273,15 +273,7 @@ class Index(pylastica.searchable.Searchable):
         @return:
         @rtype: pylastica.response.Response
         """
-        data = {
-            'actions':[{
-                'remove':{
-                    'index': self.name,
-                    'alias': name
-                }
-            }]
-        }
-        return self.client.request('_aliases', pylastica.request.Request.POST, data)
+        return self.request('_alias/%s' % name, pylastica.request.Request.DELETE)
 
     def clear_cache(self):
         """

@@ -1,9 +1,10 @@
 __author__ = 'Joe Linn'
 
-import urllib
-import urllib2
+import urllib3
 import json
 import pylastica.transport
+import pylastica.exception.connection
+
 
 class Http(pylastica.transport.AbstractTransport):
     _scheme = 'http'
@@ -56,7 +57,8 @@ class Http(pylastica.transport.AbstractTransport):
                 content = data
         #TODO: something for debugging
         response = self.request(http_method, base_url, query, content)
-        return pylastica.response.Response(response)
+        response_object = pylastica.response.Response(response.data)
+        return response_object
 
     def setHeader(self, key, value):
         """
@@ -68,7 +70,7 @@ class Http(pylastica.transport.AbstractTransport):
         @return: self
         @rtype: Http
         """
-        self._headers[key] = value;
+        self._headers[key] = value
         return self
 
     def clearHeaders(self):
@@ -131,7 +133,7 @@ class Http(pylastica.transport.AbstractTransport):
         """
         return self.request(self.METHOD_DELETE, url, query_params, data)
 
-    def request(self, method, url, query_params={}, data=None):
+    def request(self, method, url, query_params=None, data=None):
         """
         @param method: HTTP method (see METHOD_* constants)
         @type method: str
@@ -142,24 +144,11 @@ class Http(pylastica.transport.AbstractTransport):
         @param data:
         @type data: str
         @return:
-        @rtype: str
+        @rtype: urllib3.response.HTTPResponse
         """
-        if len(query_params):
-            url += '?' + urllib.urlencode(query_params)
-        request = urllib2.Request(url)
-        for key, value in self._headers.iteritems():
-            request.add_header(key, value)
-            #if method != 'GET' and method != 'POST':
-        request.get_method = lambda: method
-        if type(data) == dict:
-            data = urllib.urlencode(data)
-        response = None
+        http = urllib3.PoolManager()
         try:
-            response = urllib2.urlopen(request, data, timeout=self.connection.timeout)
-        except urllib2.HTTPError as e:
-            response = e
-        except urllib2.URLError as e:
-            import pylastica.exception.connection
+            response = http.request_encode_url(method, url, fields=query_params, body=data, headers=self._headers)
+        except urllib3.exceptions.MaxRetryError as e:
             raise pylastica.exception.connection.HttpException(e)
-        return response.read()
-
+        return response

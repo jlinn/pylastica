@@ -60,10 +60,10 @@ class Status(object):
         @return:
         @rtype: bool
         """
-        for status in self.index_statuses:
-            if status.has_alias(alias):
-                return True
-        return False
+        response = self._client.request('/_alias/%s' % alias)
+        if response.has_error() and 'AliasMissingException' in response.error:
+            return False
+        return True
 
     def get_indices_with_alias(self, alias):
         """
@@ -72,8 +72,14 @@ class Status(object):
         @type alias: str
         @return:
         @rtype: list of pylastica.index.Index
+        @raise: pylastica.exception.AliasMissingException if the requested alias does not exist
         """
-        return [status.index for status in self.index_statuses if status.has_alias(alias)]
+        response = self._client.request('_alias/%s' % alias)
+        if response.has_error() and 'AliasMissingException' in response.error:
+            #the requested alias does not exist
+            return []
+        indices = response.data
+        return [pylastica.index.Index(self._client, name) for name in indices]
 
     @property
     def response(self):
