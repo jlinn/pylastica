@@ -11,6 +11,7 @@ class BulkTest(unittest.TestCase, Base):
         doc_type = index.get_doc_type('bulk_test')
         doc_type2 = index.get_doc_type('bulk_test2')
         client = index.client
+
         doc1 = doc_type.create_document(1, {'name': 'John'})
         doc2 = pylastica.Document(2, {'name': 'Paul'})
         doc3 = doc_type.create_document(3, {'name': 'George'})
@@ -18,10 +19,12 @@ class BulkTest(unittest.TestCase, Base):
         doc1.percolate = '*'
         doc3.op_type = pylastica.Document.OP_TYPE_CREATE
         documents = [doc1, doc2, doc3, doc4]
+
         bulk = pylastica.bulk.Bulk(client)
         bulk.doc_type = doc_type2
         bulk.add_documents(documents)
         actions = bulk.actions
+
         self.assertIsInstance(actions[0], pylastica.bulk.action.IndexDocument)
         self.assertEqual('index', actions[0].op_type)
         self.assertEqual(doc1, actions[0].document)
@@ -34,6 +37,7 @@ class BulkTest(unittest.TestCase, Base):
         self.assertIsInstance(actions[3], pylastica.bulk.action.IndexDocument)
         self.assertEqual('index', actions[3].op_type)
         self.assertEqual(doc4, actions[3].document)
+
         data = bulk.to_list()
         expected = [
             {'index': {'_index': 'pylastica_test', '_type': 'bulk_test', '_id': '1', '_percolate': '*'}},
@@ -46,7 +50,9 @@ class BulkTest(unittest.TestCase, Base):
             {'name': 'Ringo'}
         ]
         self.assertEqual(expected, data)
+
         response = bulk.send()
+
         self.assertIsInstance(response, pylastica.bulk.ResponseSet)
         self.assertTrue(response.is_ok())
         self.assertFalse(response.has_error())
@@ -54,6 +60,7 @@ class BulkTest(unittest.TestCase, Base):
             self.assertIsInstance(response[i], pylastica.bulk.Response)
             self.assertTrue(response[i].is_ok())
             self.assertFalse(response[i].has_error())
+
         doc_type.index.refresh()
         doc_type2.index.refresh()
         self.assertEqual(3, doc_type.count())
@@ -67,6 +74,69 @@ class BulkTest(unittest.TestCase, Base):
         doc_type.index.refresh()
         self.assertEqual(2, doc_type.count())
         self.assertRaises(pylastica.exception.NotFoundException, doc_type.get_document, 3)
+        index.delete()
+
+    def test_update(self):
+        index = self._create_index()
+        doc_type = index.get_doc_type('bulk_test')
+        client = index.client
+
+        doc1 = doc_type.create_document(1, {'name': 'John'})
+        doc2 = pylastica.Document(2, {'name': 'Paul'})
+        doc3 = doc_type.create_document(3, {'name': 'George'})
+        doc4 = doc_type.create_document(data={'name': 'Ringo'})
+
+        doc3.op_type = pylastica.Document.OP_TYPE_CREATE
+        documents = [doc1, doc2, doc3, doc4]
+
+        bulk = pylastica.bulk.Bulk(client)
+        bulk.doc_type = doc_type
+        bulk.add_documents(documents)
+        bulk.add_document(pylastica.Document(2, {'name': 'The Walrus'}, doc_type, index), pylastica.bulk.action.Action.OP_TYPE_UPDATE)
+
+        response = bulk.send()
+        self.assertIsInstance(response, pylastica.bulk.ResponseSet)
+        self.assertTrue(response.is_ok())
+        self.assertFalse(response.has_error())
+        for i in range(len(response)):
+            self.assertIsInstance(response[i], pylastica.bulk.Response)
+            self.assertTrue(response[i].is_ok())
+            self.assertFalse(response[i].has_error())
+
+        doc_type.index.refresh()
+
+        doc2 = doc_type.get_document('2')
+        self.assertEqual('The Walrus', doc2.data['name'])
+
+        #test updating via script
+        doc = pylastica.Document(2)
+        doc.script = pylastica.Script("ctx._source.name += param1;",
+                                      {'param1': ' was Paul'})
+        action = pylastica.bulk.action.UpdateDocument(doc)
+
+        bulk = pylastica.bulk.Bulk(client)
+        bulk.doc_type = doc_type
+        bulk.add_action(action)
+        bulk.send()
+        index.refresh()
+
+        doc = doc_type.get_document('2')
+        self.assertEqual('The Walrus was Paul', doc.data['name'])
+
+        #test upsert
+        doc = pylastica.Document(5, {'counter': 1})
+        doc.script = pylastica.Script('ctx._source.counter += count', {'count': 1})
+        action = pylastica.bulk.action.UpdateDocument(doc)
+
+        bulk = pylastica.bulk.Bulk(client)
+        bulk.doc_type = doc_type
+        bulk.add_action(action)
+        bulk.send()
+        index.refresh()
+
+        doc = doc_type.get_document('5')
+        self.assertEqual(1, doc.data['counter'])
+
         index.delete()
 
 if __name__ == '__main__':

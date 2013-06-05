@@ -1,12 +1,11 @@
 __author__ = 'Joe Linn'
 
 import base64
-#import pylastica
 import pylastica.param
-import pylastica.bulk.action
+import pylastica.bulk.action.action
 
 class Document(pylastica.param.Param):
-    OP_TYPE_CREATE = pylastica.bulk.action.Action.OP_TYPE_CREATE
+    OP_TYPE_CREATE = pylastica.bulk.action.action.Action.OP_TYPE_CREATE
 
     def __init__(self, doc_id=None, data=None, doc_type=None, index=None):
         """

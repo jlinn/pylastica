@@ -1,7 +1,7 @@
 __author__ = 'Joe Linn'
 
-#import pylastica
 import pylastica.exception
+
 
 class ActionException(pylastica.exception.BulkException):
     def __init__(self, response, *args, **kwargs):

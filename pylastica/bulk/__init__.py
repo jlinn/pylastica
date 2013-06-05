@@ -3,6 +3,7 @@ __author__ = 'Joe Linn'
 from . import action
 from .response import *
 from .responseset import *
+import pylastica.exception.bulk
 
 
 class Bulk(object):
@@ -254,7 +255,7 @@ class Bulk(object):
                 bulk_responses.append(pylastica.bulk.response.Response(bulk_response_data, action, op_type))
         bulk_response_set = pylastica.bulk.responseset.ResponseSet(response, bulk_responses)
         if bulk_response_set.has_error():
-            raise pylastica.exception.bulk.BulkResponseException(bulk_response_set)
+            raise pylastica.exception.bulk.ResponseException(bulk_response_set)
         return bulk_response_set
 
     def send_udp(self, host=None, port=None):
