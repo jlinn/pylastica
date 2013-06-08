@@ -7,9 +7,15 @@ from ..base import *
 
 class ThriftTest(unittest.TestCase, Base):
     def setUp(self):
-        self._client = pylastica.Client(self._get_hosts()[0]['host'], 9500, transport='ThriftTransport')
+        client = self._get_client()
+        node = client.cluster.nodes[0]
+        self._has_thrift = node.info.has_plugin('transport-thrift')
+        if self._has_thrift:
+            self._client = pylastica.Client(self._get_hosts()[0]['host'], 9500, transport='ThriftTransport')
 
     def test_construct(self):
+        if not self._has_thrift:
+            self.skipTest('The transport-thrift plugin is not installed.')
         host = self._get_hosts()[0]['host']
         port = 9500
         client = pylastica.Client(host, port, transport='Thrift')
@@ -17,6 +23,8 @@ class ThriftTest(unittest.TestCase, Base):
         self.assertEqual(port, client.get_connection().port)
 
     def test_search_request(self):
+        if not self._has_thrift:
+            self.skipTest('The transport-thrift plugin is not installed.')
         index = self._client.get_index('pylastica_test1')
         index.create(options=True)
         doc_type = index.get_doc_type('user')
@@ -32,6 +40,8 @@ class ThriftTest(unittest.TestCase, Base):
         index.delete()
 
     def test_invalid_request(self):
+        if not self._has_thrift:
+            self.skipTest('The transport-thrift plugin is not installed.')
         index = pylastica.index.Index(self._client, 'missing_index')
         self.assertRaises(pylastica.exception.ResponseException, index.get_stats)
 

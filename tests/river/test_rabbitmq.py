@@ -6,7 +6,14 @@ from ..base import *
 
 
 class MyTestCase(unittest.TestCase, Base):
+    def setUp(self):
+        client = self._get_client()
+        node = client.cluster.nodes[0]
+        self._has_rabbit_river = node.info.has_plugin('river-rabbitmq')
+
     def test_to_dict(self):
+        if not self._has_rabbit_river:
+            self.skipTest('The river-rabbitmq plugin is not installed.')
         client = self._get_client()
         river = pylastica.river.RabbitMQ(client, 'test_river', index='test')
         expected = {
@@ -26,6 +33,8 @@ class MyTestCase(unittest.TestCase, Base):
         self.assertEqual(expected, river.to_dict())
 
     def test_create_and_delete(self):
+        if not self._has_rabbit_river:
+            self.skipTest('The river-rabbitmq plugin is not installed.')
         client = self._get_client()
         river = pylastica.river.RabbitMQ(client, 'test_river')
         response = river.create()

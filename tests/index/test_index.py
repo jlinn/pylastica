@@ -9,6 +9,9 @@ from ..base import Base
 class IndexTest(unittest.TestCase, Base):
     def setUp(self):
         self._data_path = '/'.join(os.path.abspath(__file__).split('/')[:-1]) + '/../../test_data/'
+        client = self._get_client()
+        node = client.cluster.nodes[0]
+        self._has_attachment_plugin = node.info.has_plugin('mapper-attachments')
 
     def test_mapping(self):
         index = self._create_index()
@@ -61,6 +64,8 @@ class IndexTest(unittest.TestCase, Base):
         index.delete()
 
     def test_add_pdf_file(self):
+        if not self._has_attachment_plugin:
+            self.skipTest('Plugin mapper-attachments is not installed.')
         index_mapping = {
             'file': {'type': 'attachment', 'store': 'no'},
             'text': {'type': 'string', 'store': 'no'}
@@ -93,6 +98,8 @@ class IndexTest(unittest.TestCase, Base):
         index.delete()
 
     def test_add_pdf_file_content(self):
+        if not self._has_attachment_plugin:
+            self.skipTest('Plugin mapper-attachments is not installed.')
         index_mapping = {
             'file': {'type': 'attachment', 'store': 'no'},
             'text': {'type': 'string', 'store': 'no'}
