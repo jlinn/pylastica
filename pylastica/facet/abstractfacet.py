@@ -3,6 +3,7 @@ __author__ = 'Joe Linn'
 import abc
 import pylastica.param
 
+
 class AbstractFacet(pylastica.param.Param):
     __metaclass__ = abc.ABCMeta
 
@@ -33,6 +34,18 @@ class AbstractFacet(pylastica.param.Param):
         """
         assert isinstance(name, str) and name != '', "name must be a string: %r" % name
         self._name = name
+
+    def set_filter(self, facet_filter):
+        """
+        Set a filter for this facet
+        @param facet_filter: a filter to apply on the facet
+        @type facet_filter: pylastica.filter.AbstractFilter
+        @return:
+        @rtype: self
+        """
+        if not isinstance(facet_filter, pylastica.filter.AbstractFilter):
+            raise TypeError("facet_filter must be an instance of an implementation of AbstractFilter: %r" % facet_filter)
+        return self._set_facet_param('facet_filter', facet_filter.to_dict())
 
     def set_global(self, glob=True):
         """
