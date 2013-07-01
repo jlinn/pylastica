@@ -8,6 +8,7 @@ from .exists import *
 from .geoboundingbox import *
 from .geodistance import *
 from .geodistancerange import *
+from .geohashcell import *
 from .geopolygon import *
 from .haschild import *
 from .hasparent import *
