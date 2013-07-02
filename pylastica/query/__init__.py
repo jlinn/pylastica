@@ -3,6 +3,7 @@ __author__ = 'Joe Linn'
 
 from .abstract import *
 from .bool import *
+from .common import *
 from .constantscore import *
 from .customscore import *
 from .field import *

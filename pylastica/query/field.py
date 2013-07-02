@@ -2,6 +2,7 @@ __author__ = 'Joe Linn'
 
 from .abstract import AbstractQuery
 
+
 class Field(AbstractQuery):
     def __init__(self, field='', query_string=''):
         """

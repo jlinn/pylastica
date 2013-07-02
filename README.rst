@@ -33,4 +33,4 @@ Documentation is in the works. In the mean time, pylastica closely follows `Elas
 Compatibility
 -------------
 
-Pylastica is tested with Python 2.7 and Elasticsearch version 0.90.1.
+Pylastica is tested with Python 2.7 and Elasticsearch version 0.90.2.
