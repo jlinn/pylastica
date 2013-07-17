@@ -56,18 +56,19 @@ class DocType(pylastica.searchable.Searchable):
                 doc.version = data['_version']
         return response
 
-    def update_document(self, doc):
+    def update_document(self, data):
         """
         Update a document using an update script.
         @param doc: document with update data
-        @type doc: pylastica.document.Document
+        @type doc: pylastica.document.Document or pylastica.script.Script
         @return:
         @rtype: pylastica.response.Response
         """
-        assert isinstance(doc, pylastica.document.Document), "doc must be a Document: %r" % doc
-        if not doc.has_id():
+        if not isinstance(data, pylastica.document.Document) and not isinstance(data, pylastica.script.Script):
+            raise TypeError("data must be an instance of Document or Script: %r" % data)
+        if not data.has_id():
             raise pylastica.exception.InvalidException("Document id is not set.")
-        return self.index.client.update_document(doc.doc_id, doc, self.index.name, self.name)
+        return self.index.client.update_document(data.doc_id, data, self.index.name, self.name)
 
     def add_documents(self, docs):
         """

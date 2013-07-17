@@ -1,9 +1,9 @@
 __author__ = 'Joe Linn'
 
-#import pylastica
 import pylastica.connection
 import pylastica.index
 import pylastica.request
+
 
 class Client(object):
 
@@ -215,13 +215,9 @@ class Client(object):
         if isinstance(data, pylastica.script.Script):
             request_data = data.to_dict()
         elif isinstance(data, pylastica.document.Document):
-            if data.has_script():
-                request_data = data.script.to_dict()
-                document_data = data.data
-                if document_data is not None:
-                    request_data['upsert'] = document_data
-            else:
-                request_data = {'doc': data.data}
+            request_data = {'doc': data.data}
+            if data.doc_as_upsert:
+                request_data['doc_as_upsert'] = True
             doc_options = data.get_options([
                 'version',
                 'version_type',
@@ -237,10 +233,13 @@ class Client(object):
             ])
             options.update(doc_options)
             #set fields param to source only if options was not set before
-            if data.auto_populate or self.get_config_value(['document', 'autopopulate'], False) and 'fields' not in options:
+            if data.auto_populate and (data.is_auto_populate() or self.get_config_value(['document', 'autopopulate'], False)) and 'fields' not in options:
                 options['fields'] = '_source'
         else:
             request_data = data
+        if isinstance(data, pylastica.script.Script) or isinstance(data, pylastica.document.Document):
+            if data.has_upsert():
+                request_data['upsert'] = data.upsert.data
         if 'retry_on_conflict' not in options:
             retry_on_conflict = self.get_config('retry_on_conflict')
             options['retry_on_conflict'] = retry_on_conflict

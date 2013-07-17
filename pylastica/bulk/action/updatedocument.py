@@ -26,13 +26,62 @@ class UpdateDocument(IndexDocument):
     def document(self, document):
         """
         Set the document for this bulk update operation.
-        @param document: If the given Document object has a script, the script will be used in the update operation.
+        @param document:
         @type document:  pylastica.document.Document
         """
         super(UpdateDocument, self).set_document(document)
-        if document.has_script():
-            self.source = document.script.to_dict()
-            if document.data is not None:
-                self.source['upsert'] = document.data
-        else:
-            self.source = {'doc': document.data}
+        source = {'doc': document.data}
+        if document.doc_as_upsert:
+            source['doc_as_upsert'] = True
+        elif document.has_upsert():
+            upsert = document.upsert.data
+            if upsert is not None:
+                source['upsert'] = upsert
+        self.source = source
+
+    @property
+    def script(self):
+        """
+
+        @return:
+        @rtype: pylastica.script.Script
+        """
+        return super(UpdateDocument, self).script
+
+    @script.setter
+    def script(self, script):
+        """
+
+        @param script:
+        @type script: pylastica.script.Script
+        """
+        super(UpdateDocument, self).set_script(script)
+        source = script.to_dict()
+        if script.has_upsert():
+            upsert = script.upsert.data
+            if upsert is not None:
+                source['upsert'] = upsert
+        self.source = source
+
+    def _get_metadata_by_script(self, script):
+        """
+
+        @param script:
+        @type script: pylastica.script.Script
+        @return:
+        @rtype: dict
+        """
+        params = [
+            'index',
+            'type',
+            'id',
+            'version',
+            'version_type',
+            'routing',
+            'percolate',
+            'parent',
+            'ttl',
+            'timestamp'
+        ]
+        metadata = script.get_options(params, True)
+        return metadata

@@ -6,6 +6,15 @@ from .base import Base
 
 
 class BulkTest(unittest.TestCase, Base):
+    def test_create_abstract_document_with_invalid_data(self):
+        bad_document = object()
+        # wrong class type
+        self.assertRaises(TypeError, pylastica.bulk.abstractdocument.AbstractDocument.create, bad_document)
+
+        # attempt to create a Document with a Script
+        script = pylastica.Script('')
+        self.assertRaises(TypeError, pylastica.bulk.abstractdocument.AbstractDocument.create, script, pylastica.bulk.abstractdocument.AbstractDocument.OP_TYPE_CREATE)
+
     def test_send(self):
         index = self._create_index()
         doc_type = index.get_doc_type('bulk_test')
@@ -109,10 +118,10 @@ class BulkTest(unittest.TestCase, Base):
         self.assertEqual('The Walrus', doc2.data['name'])
 
         #test updating via script
-        doc = pylastica.Document(2)
-        doc.script = pylastica.Script("ctx._source.name += param1;",
-                                      {'param1': ' was Paul'})
-        action = pylastica.bulk.action.UpdateDocument(doc)
+        script = pylastica.Script('ctx._source.name += param1', {'param1': ' was Paul'}, doc_id=2)
+        doc2 = pylastica.Document()
+        script.upsert = doc2
+        action = pylastica.bulk.action.AbstractDocument.create(script, pylastica.bulk.action.AbstractDocument.OP_TYPE_UPDATE)
 
         bulk = pylastica.bulk.Bulk(client)
         bulk.doc_type = doc_type
@@ -124,9 +133,10 @@ class BulkTest(unittest.TestCase, Base):
         self.assertEqual('The Walrus was Paul', doc.data['name'])
 
         #test upsert
-        doc = pylastica.Document(5, {'counter': 1})
-        doc.script = pylastica.Script('ctx._source.counter += count', {'count': 1})
-        action = pylastica.bulk.action.UpdateDocument(doc)
+        script = pylastica.Script('ctx._source.counter += count', {'count': 1}, doc_id=5)
+        doc = pylastica.Document('', {'counter': 1})
+        script.upsert = doc
+        action = pylastica.bulk.action.AbstractDocument.create(script, pylastica.bulk.action.AbstractDocument.OP_TYPE_UPDATE)
 
         bulk = pylastica.bulk.Bulk(client)
         bulk.doc_type = doc_type
@@ -136,6 +146,22 @@ class BulkTest(unittest.TestCase, Base):
 
         doc = doc_type.get_document('5')
         self.assertEqual(1, doc.data['counter'])
+
+        #test doc_as_upsert
+        doc = pylastica.Document(6, {'test': 'test'})
+        doc.doc_as_upsert = True
+        update_action = pylastica.bulk.action.AbstractDocument.create(doc, pylastica.bulk.action.AbstractDocument.OP_TYPE_UPDATE)
+        bulk = pylastica.bulk.Bulk(client)
+        bulk.doc_type = doc_type
+        bulk.add_action(update_action)
+        response = bulk.send()
+
+        self.assertTrue(response.is_ok())
+        self.assertFalse(response.has_error())
+
+        index.refresh()
+        doc = doc_type.get_document(6)
+        self.assertEqual('test', doc.data['test'])
 
         index.delete()
 
