@@ -2,10 +2,11 @@ __author__ = 'Joe Linn'
 
 import base64
 import pylastica.param
-import pylastica.bulk.action.action
+from pylastica.bulk.action import Action
+
 
 class Document(pylastica.param.Param):
-    OP_TYPE_CREATE = pylastica.bulk.action.action.Action.OP_TYPE_CREATE
+    OP_TYPE_CREATE = Action.OP_TYPE_CREATE
 
     def __init__(self, doc_id=None, data=None, doc_type=None, index=None):
         """
@@ -25,6 +26,8 @@ class Document(pylastica.param.Param):
         self._data = {}
         self._script = None
         self._auto_populate = False
+        self._doc_as_upsert = False
+        self._upsert = None
         self.doc_id = doc_id
         if data is not None:
             self.data = data
@@ -624,7 +627,7 @@ class Document(pylastica.param.Param):
         @return:
         @rtype: pylastica.script.Script
         """
-        return self._script
+        raise pylastica.exception.NotImplementedException("The script getter is no longer available.")
 
     @script.setter
     def script(self, script):
@@ -633,7 +636,34 @@ class Document(pylastica.param.Param):
         @param script:
         @type script: pylastica.script.Script or dict or str
         """
-        self._script = pylastica.script.Script.create(script)
+        raise pylastica.exception.NotImplementedException("The script setter is no longer available.")
+
+    @property
+    def upsert(self):
+        """
+
+        @return:
+        @rtype: dict
+        """
+        return self._upsert
+
+    @upsert.setter
+    def upsert(self, upsert):
+        """
+
+        @param upsert:
+        @type upsert: dict
+        """
+        document = Document.create(upsert)
+        self._upsert = document
+
+    def has_upsert(self):
+        """
+
+        @return:
+        @rtype: bool
+        """
+        return self._upsert is not None
 
     def has_script(self):
         """
@@ -641,7 +671,25 @@ class Document(pylastica.param.Param):
         @return:
         @rtype: bool
         """
-        return self._script is not None
+        raise pylastica.exception.NotImplementedException("has_script() is no longer available.")
+
+    @property
+    def doc_as_upsert(self):
+        """
+
+        @return:
+        @rtype: bool
+        """
+        return self._doc_as_upsert
+
+    @doc_as_upsert.setter
+    def doc_as_upsert(self, value):
+        """
+
+        @param value:
+        @type value: bool
+        """
+        self._doc_as_upsert = bool(value)
 
     @property
     def auto_populate(self):
@@ -692,3 +740,21 @@ class Document(pylastica.param.Param):
         if not with_underscore:
             data = {key.lstrip('_'): value for key, value in data.iteritems()}
         return data
+
+    @classmethod
+    def create(cls, data):
+        """
+
+        @param cls:
+        @type cls:
+        @param data:
+        @type data: dict or Document
+        @return:
+        @rtype: Document
+        """
+        if isinstance(data, cls):
+            return data
+        elif isinstance(data, dict):
+            return cls('', data)
+        else:
+            raise pylastica.exception.InvalidException("Failed to create document. Invalid data provided: %r" % data)

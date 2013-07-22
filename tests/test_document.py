@@ -62,14 +62,14 @@ class TestDocument(unittest.TestCase, Base):
         doc.doc_id = 'hello'
         self.assertTrue(doc.has_id())
 
-    def test_set_script(self):
+    def test_upsert(self):
         doc = pylastica.Document()
-        script = pylastica.Script('ctx._source.counter += count')
-        script.set_param('count', 1)
-        self.assertFalse(doc.has_script())
-        doc.script = script
-        self.assertTrue(doc.has_script())
-        self.assertEqual(script, doc.script)
+        upsert = pylastica.Document()
+        upsert.data = {'someproperty': 'somevalue'}
+        self.assertFalse(doc.has_upsert())
+        doc.upsert = upsert
+        self.assertTrue(doc.has_upsert())
+        self.assertEqual(upsert, doc.upsert)
 
 if __name__ == '__main__':
     unittest.main()

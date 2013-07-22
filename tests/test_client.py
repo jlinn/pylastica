@@ -190,16 +190,21 @@ class TestClient(unittest.TestCase, Base):
         self.assertEqual('value3added', data['field3'])
         index.delete()
 
-    def test_update_document_by_document_with_script(self):
+    def test_update_document_by_script_with_upsert(self):
         index = self._create_index()
         doc_type = index.get_doc_type('test')
         client = index.client
-        new_document = pylastica.Document(1, {'field1': 'value1', 'field2': 10, 'field3': 'should be removed', 'field4': 'value4'})
         script = pylastica.Script('ctx._source.field2 += count; ctx._source.remove("field3"); ctx._source.field4 = "changed";')
         script.set_param('count', 5)
-        new_document.script = script
+        script.upsert = {
+            'field1': 'value1',
+            'field2': 10,
+            'field3': 'should be removed',
+            'field4': 'value4'
+        }
+
         #should use document, not script, because document does not exist
-        client.update_document(1, new_document, index.name, doc_type.name, {'fields': '_source'})
+        client.update_document(1, script, index.name, doc_type.name, {'fields': '_source'})
         document = doc_type.get_document(1)
 
         self.assertIsInstance(document, pylastica.Document)
@@ -213,7 +218,7 @@ class TestClient(unittest.TestCase, Base):
         self.assertTrue('field3' in data)
 
         #should use script this time, because the document exists
-        client.update_document(1, new_document, index.name, doc_type.name, {'fields': '_source'})
+        client.update_document(1, script, index.name, doc_type.name, {'fields': '_source'})
         document = doc_type.get_document(1)
         self.assertIsInstance(document, pylastica.Document)
         data = document.data

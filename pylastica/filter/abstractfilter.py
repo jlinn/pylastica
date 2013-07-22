@@ -4,6 +4,7 @@ import abc
 import pylastica.param
 import pylastica.exception
 
+
 class AbstractFilter(pylastica.param.Param):
     __metaclass__ = abc.ABCMeta
 
@@ -36,6 +37,7 @@ class AbstractFilter(pylastica.param.Param):
         @rtype: self
         """
         return self.set_param('_name', name)
+
 
 class AbstractGeoDistance(AbstractFilter):
     __metaclass__ = abc.ABCMeta
@@ -154,6 +156,7 @@ class AbstractGeoDistance(AbstractFilter):
     def to_dict(self):
         self.set_param(self._key, self._get_location_data())
         return super(AbstractGeoDistance, self).to_dict()
+
 
 class AbstractMulti(AbstractFilter):
     def __init__(self):

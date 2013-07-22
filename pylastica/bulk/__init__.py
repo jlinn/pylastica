@@ -1,6 +1,7 @@
 __author__ = 'Joe Linn'
 
 from . import action
+from .action import abstractdocument
 from .response import *
 from .responseset import *
 import pylastica.exception.bulk
@@ -186,6 +187,54 @@ class Bulk(object):
             self.add_action(bulk_action)
         return self
 
+    def add_script(self, script, op_type=None):
+        """
+        Add a script
+        @param script: Script object
+        @type script: pylastica.script.Script
+        @param op_type: bulk operation
+        @type op_type: str
+        @return:
+        @rtype: self
+        """
+        action = abstractdocument.AbstractDocument.create(script, op_type)
+        return self.add_action(action)
+
+    def add_scripts(self, scripts, op_type=None):
+        """
+        Add multiple scripts
+        @param scripts:
+        @type scripts: list of pylastica.script.Script
+        @param op_type: bulk operation
+        @type op_type: str
+        @return:
+        @rtype: self
+        """
+        for script in scripts:
+            self.add_script(script)
+        return self
+
+    def add_data(self, data, op_type=None):
+        """
+        Add data (document or script)
+        @param data:
+        @type data: pylastica.document.Document or pylastica.script.Script or list of pylastica.document.Document or list of pylastica.script.Script
+        @param op_type: bulk operation
+        @type op_type: str
+        @return:
+        @rtype: self
+        """
+        if not isinstance(data, list):
+            data = [data]
+        for action_data in data:
+            if isinstance(action_data, pylastica.script.Script):
+                self.add_script(action_data)
+            elif isinstance(action_data, pylastica.document.Document):
+                self.add_document(action_data)
+            else:
+                raise TypeError("Data must be a Document, a Script, or a list comprised of either or both of those types: %r" % action_data)
+        return self
+
     def to_string(self):
         """
 
@@ -246,12 +295,12 @@ class Bulk(object):
                 op_type = action.op_type
                 bulk_response_data = item[item.keys()[0]]
                 if isinstance(action, AbstractDocument):
-                    document = action.document
-                    if document.auto_populate or self._client.get_config_value(['document', 'autoPopulate'], False):
-                        if not document.has_id() and '_id' in bulk_response_data:
-                            document.doc_id = bulk_response_data['_id']
+                    data = action.get_data()
+                    if isinstance(data, pylastica.document.Document) and data.auto_populate or self._client.get_config_value(['document', 'autoPopulate'], False):
+                        if not data.has_id() and '_id' in bulk_response_data:
+                            data.doc_id = bulk_response_data['_id']
                         if '_version' in bulk_response_data:
-                            document.version = bulk_response_data['_version']
+                            data.version = bulk_response_data['_version']
                 bulk_responses.append(pylastica.bulk.response.Response(bulk_response_data, action, op_type))
         bulk_response_set = pylastica.bulk.responseset.ResponseSet(response, bulk_responses)
         if bulk_response_set.has_error():

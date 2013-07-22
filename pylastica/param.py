@@ -4,6 +4,7 @@ import json
 import pylastica.exception
 import pylastica.util
 
+
 class Param(object):
     def __init__(self):
         self._params = {}

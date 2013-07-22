@@ -6,7 +6,7 @@ packages = find_packages(exclude=["tests", "tests.*"])
 
 setup(
     name='pylastica',
-    version='0.1.1+r2',
+    version='0.1.2',
     packages=packages,
     url='https://github.com/jlinn/pylastica',
     license='LICENSE.txt',
@@ -14,6 +14,7 @@ setup(
     author_email='',
     description="Python port of Nicolas Ruflin's Elastica PHP library",
     long_description=long_description,
+    install_requires=['dateutils', 'urllib3'],
     classifiers=[
         'Intended Audience :: Developers',
         'Development Status :: 2 - Pre-Alpha',
