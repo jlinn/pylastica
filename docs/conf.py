@@ -19,7 +19,7 @@ import sys, os
 #sys.path.insert(0, os.path.abspath('.'))
 
 current_path = os.path.dirname(os.path.abspath(__file__))
-pylastica_path = os.path.join(current_path, "pylastica")
+pylastica_path = os.path.join(os.path.split(current_path)[0], "pylastica")
 sys.path.append(pylastica_path)
 
 import pylastica as info
