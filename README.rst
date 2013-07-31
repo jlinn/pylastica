@@ -28,7 +28,7 @@ To use a RabbitMQ river, you will need to install the `RabbitMQ river plugin <ht
 Documentation
 -------------
 
-Documentation is in the works. In the mean time, pylastica closely follows `Elastica <https://github.com/ruflin/Elastica>`_, so its docs should suffice.
+Documentation can be found `here <https://pylastica.readthedocs.org>`_.
 
 Compatibility
 -------------
