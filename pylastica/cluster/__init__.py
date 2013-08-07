@@ -29,6 +29,15 @@ class Cluster(object):
         self._data = self.response.data
 
     @property
+    def pending_tasks(self):
+        """
+        Get a list of pending cluster tasks
+        @return:
+        @rtype: pylastica.response.Response
+        """
+        return self._client.request('_cluster/pending_tasks')
+
+    @property
     def response(self):
         """
         Return the Response object

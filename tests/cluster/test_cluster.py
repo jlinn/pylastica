@@ -48,3 +48,7 @@ class ClusterTest(unittest.TestCase, Base):
     def test_get_health(self):
         client = self._get_client()
         self.assertIsInstance(client.cluster.health, pylastica.cluster.health.Health)
+
+    def test_pending_tasks(self):
+        client = self._get_client()
+        self.assertTrue('tasks' in client.cluster.pending_tasks.data)

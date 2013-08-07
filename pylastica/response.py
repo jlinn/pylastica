@@ -3,6 +3,7 @@ __author__ = 'Joe Linn'
 import json
 import pylastica.exception
 
+
 class Response(object):
     def __init__(self, response_string):
         """
@@ -18,6 +19,19 @@ class Response(object):
             self._response = response_string
         else:
             self._response_string = response_string
+
+    @property
+    def status(self):
+        """
+        Get the HTTP status code for this response
+        @return:
+        @rtype: str
+        """
+        status = ''
+        response = self.data
+        if 'status' in response:
+            status = response['status']
+        return str(status)
 
     def get_error(self):
         """

@@ -63,7 +63,6 @@ class StatusTest(unittest.TestCase, Base):
         index = self._create_index()
         status = pylastica.Status(index.client)
 
-
         for tmp_index in status.get_indices_with_alias(alias_name):
             tmp_index.remove_alias(alias_name)
 
