@@ -60,7 +60,9 @@ class Bool(AbstractFilter):
         return self
 
     def to_dict(self):
-        args = {}
+        args = {
+            'bool': {}
+        }
         if len(self._must):
             args['bool']['must'] = self._must
         if len(self._should):
