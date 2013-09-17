@@ -8,6 +8,7 @@ from .constantscore import *
 from .customscore import *
 from .field import *
 from .filtered import *
+from .functionscore import *
 from .fuzzy import *
 from .fuzzylikethis import *
 from .haschild import *
