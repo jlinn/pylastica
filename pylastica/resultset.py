@@ -117,6 +117,23 @@ class ResultSet(object):
         """
         return self._query
 
+    @property
+    def suggests(self):
+        """
+        Return suggestions
+        @return:
+        @rtype: dict
+        """
+        data = self._response.get_data()
+        return data['suggest'] if 'suggest' in data else {}
+
+    def has_suggests(self):
+        """
+        @return: true if this result set contains suggestions
+        @rtype: bool
+        """
+        return 'suggest' in self._response.data
+
     def __len__(self):
         """
         Returns the size of the current result set

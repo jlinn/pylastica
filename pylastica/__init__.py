@@ -25,6 +25,7 @@ from .script import *
 from .scriptfields import *
 from .search import *
 from .status import *
+from . import suggest
 # from .searchable import *
 # from . import transport
 # from . import util

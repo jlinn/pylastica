@@ -34,3 +34,8 @@ Compatibility
 -------------
 
 Pylastica is tested with Python 2.7 and Elasticsearch version 0.90.7.
+
+Changes
+-------
+
+See the `changelog <https://github.com/jlinn/pylastica/blob/master/changes.markdown>`_.

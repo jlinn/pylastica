@@ -1,9 +1,12 @@
+from pylastica.suggest.abstract import AbstractSuggestion
+
 __author__ = 'Joe Linn'
 
 import pylastica.param
 import pylastica.scriptfields
 from .abstract import AbstractQuery
 from .matchall import MatchAll
+from pylastica.suggest.suggest import Suggest
 
 
 class Query(pylastica.param.Param):
@@ -11,13 +14,15 @@ class Query(pylastica.param.Param):
         """
 
         @param query: optional query object
-        @type query: dict or pylastica.query.AbstractQuery
+        @type query: dict or pylastica.query.AbstractQuery or Suggest
         """
         super(Query, self).__init__()
         if isinstance(query, dict):
             self.set_raw_query(query)
         elif isinstance(query, AbstractQuery):
             self.query = query
+        elif isinstance(query, Suggest):
+            self.set_suggest(query)
 
     @classmethod
     def create(cls, query):
@@ -32,8 +37,10 @@ class Query(pylastica.param.Param):
         """
         if isinstance(query, Query):
             return query
-        elif isinstance(query, AbstractQuery):
+        elif isinstance(query, AbstractQuery) or isinstance(query, Suggest):
             return cls(query)
+        elif isinstance(query, AbstractSuggestion):
+            return cls(Suggest(query))
         elif isinstance(query, pylastica.filter.AbstractFilter):
             new_query = cls()
             new_query.set_filter(query)
@@ -252,3 +259,14 @@ class Query(pylastica.param.Param):
         """
         assert isinstance(min_score, int) or isinstance(min_score, float), "min_score must be either a float or int: %r" % min_score
         return self.set_param('min_score', min_score)
+
+    def set_suggest(self, suggest):
+        """
+
+        @param suggest:
+        @type suggest: pylastica.suggest.Suggest
+        @return:
+        @rtype: self
+        """
+        self._params.update(suggest.to_dict())
+        return self
