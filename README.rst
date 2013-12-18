@@ -33,7 +33,7 @@ Documentation can be found `here <https://pylastica.readthedocs.org>`_.
 Compatibility
 -------------
 
-Pylastica is tested with Python 2.7 and Elasticsearch version 0.90.7.
+Pylastica is tested with Python 2.7 and Elasticsearch version 0.90.8.
 
 Changes
 -------

@@ -24,6 +24,7 @@ from .query import *
 from .querystring import *
 from .range import *
 from .simple import *
+from .simplequerystring import SimpleQueryString
 from .term import *
 from .terms import *
 from .text import *

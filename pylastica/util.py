@@ -14,7 +14,7 @@ def get_param_name(name_or_object):
     """
     if not isinstance(name_or_object, str) and isinstance(name_or_object, object):
         name_or_object = name_or_object.__class__.__name__
-    name_or_object = re.sub(r'(Facet|Query|Filter)', r'', name_or_object)
+    name_or_object = re.sub(r'^(Facet|Query|Filter)|(Facet|Query|Filter)$', r'', name_or_object)
     return to_snake_case(name_or_object)
 
 def to_snake_case(string):

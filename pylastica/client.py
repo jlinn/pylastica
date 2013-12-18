@@ -107,7 +107,7 @@ class Client(object):
         if key is None:
             return self._config
         if key not in self._config:
-            raise pylastica.exception.InvalidException("Config key is not set: %s" %key)
+            raise pylastica.exception.InvalidException("Config key is not set: %s" % key)
         return self._config[key]
 
     def set_config_value(self, key, value):
