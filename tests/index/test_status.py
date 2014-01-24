@@ -45,7 +45,7 @@ class StatusTest(unittest.TestCase, Base):
         settings = status.settings
 
         self.assertIsInstance(settings, dict)
-        self.assertTrue('index.number_of_shards' in settings)
+        self.assertTrue('number_of_shards' in settings['index'])
         index.delete()
 
 

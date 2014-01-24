@@ -8,10 +8,10 @@ install: "pip install -r requirements.txt --use-mirrors"
 # set up environment variables
 env:
   global:
-    - ES_VER=0.90.10
-    - ES_MAPPER_ATTACHMENTS_VER=1.9.0
-    - ES_TRANSPORT_THRIFT_VER=1.7.0
-    - ES_RABBITMQ_PLUGIN_VER=1.6.0
+    - ES_VER=1.0.0.RC1
+    - ES_MAPPER_ATTACHMENTS_VER=2.0.0.RC1
+    - ES_TRANSPORT_THRIFT_VER=2.0.0.RC1
+    - ES_RABBITMQ_PLUGIN_VER=2.0.0.RC1
 
 # install Elasticsearch
 before_script:

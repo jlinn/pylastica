@@ -44,7 +44,7 @@ class SettingsTest(unittest.TestCase, Base):
         index = self._create_index('test')
         settings = index.status.settings
 
-        self.assertTrue('index.number_of_shards' in settings)
+        self.assertTrue('number_of_shards' in settings['index'])
         index.delete()
 
 if __name__ == '__main__':

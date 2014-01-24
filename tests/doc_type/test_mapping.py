@@ -30,7 +30,7 @@ class MappingTest(unittest.TestCase, Base):
         result = result_set[0]
         fields = result.get_fields()
 
-        self.assertEqual(firstname, fields['firstname'])
+        self.assertEqual(firstname, fields['firstname'][0])
         self.assertFalse('lastname' in fields)
         self.assertEqual(1, len(fields))
 
@@ -64,7 +64,7 @@ class MappingTest(unittest.TestCase, Base):
         doc_type.set_mapping(mapping)
 
         mapping_data = doc_type.mapping
-        self.assertEqual('test', mapping_data['test']['_meta']['class'])
+        self.assertEqual('test', mapping_data['pylastica_test']['mappings']['test']['_meta']['class'])
         index.delete()
 
 

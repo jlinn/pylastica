@@ -15,7 +15,7 @@ class InfoTest(unittest.TestCase, Base):
         self.assertIsNone(info.get('os', 'mem', 'total'))
 
         info = pylastica.node.Info(node, ['os'])
-        self.assertIsInstance(info.get('os', 'mem', 'total'), unicode)
+        self.assertIsInstance(info.get('os', 'mem', 'total_in_bytes'), int)
         self.assertIsInstance(info.get('os', 'mem'), dict)
         self.assertIsNone(info.get('test', 'notest', 'notexist'))
 

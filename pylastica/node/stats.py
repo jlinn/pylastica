@@ -63,5 +63,5 @@ class Stats(object):
         @return:
         @rtype: pylastica.response.Response
         """
-        self._response = self.node.client.request('_cluster/nodes/%s/stats' % self.node.name)
+        self._response = self.node.client.request('_nodes/%s/stats' % self.node.name)
         self._data = self.response.data['nodes']

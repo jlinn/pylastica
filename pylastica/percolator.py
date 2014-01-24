@@ -24,7 +24,7 @@ class Percolator(object):
         @return:
         @rtype: pylastica.response.Response
         """
-        path = '_percolator/%s/%s' % (self._index.name, name)
+        path = '%s/.percolator/%s' % (self._index.name, name)
         query = pylastica.query.Query.create(query)
         return self._index.client.request(path, pylastica.request.Request.PUT, query.to_dict())
 
@@ -56,7 +56,7 @@ class Percolator(object):
             data['query'] = query.query
         response = self._index.client.request(path, data=data)
         data = response.data
-        return data['matches']
+        return data['matches'] if 'matches' in data else []
 
     @property
     def index(self):

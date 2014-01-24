@@ -79,8 +79,8 @@ class StatusTest(unittest.TestCase, Base):
         server_status = status.server_status
 
         self.assertIsInstance(server_status, dict)
-        self.assertTrue('ok' in server_status)
-        self.assertTrue(server_status['ok'])
+        self.assertTrue('status' in server_status)
+        self.assertTrue(server_status['status'] == 200)
         self.assertTrue('version' in server_status)
 
         version_info = server_status['version']

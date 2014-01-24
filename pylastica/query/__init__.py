@@ -6,7 +6,6 @@ from .bool import *
 from .common import *
 from .constantscore import *
 from .customscore import *
-from .field import *
 from .filtered import *
 from .functionscore import *
 from .fuzzy import *
@@ -27,6 +26,5 @@ from .simple import *
 from .simplequerystring import SimpleQueryString
 from .term import *
 from .terms import *
-from .text import *
 from .wildcard import *
 

@@ -98,7 +98,7 @@ class DocType(pylastica.searchable.Searchable):
             result = self.request(path, pylastica.request.Request.GET, query=options).data
         except pylastica.exception.ResponseException:
             raise pylastica.exception.NotFoundException("Document with id %s not found." % doc_id)
-        if result['exists'] is None or result['exists'] == '' or not result['exists']:
+        if result['found'] is None or result['found'] == '' or not result['found']:
             raise pylastica.exception.NotFoundException("Document with id %s not found." % doc_id)
         data = result['_source'] if '_source' in result else {}
         document = pylastica.document.Document(doc_id, data, self.name, self.index)

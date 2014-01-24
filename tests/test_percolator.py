@@ -36,14 +36,19 @@ class PercolatorTest(unittest.TestCase, Base):
         doc1 = pylastica.Document().set('name', 'linn')
         doc2 = pylastica.Document().set('name', 'joe')
 
-        index = pylastica.index.Index(client, '_percolator')
-        index.optimize()
-        index.refresh()
+        self._index.refresh()
 
         matches1 = percolator.match_doc(doc1)
 
-        self.assertTrue(percolator_name in matches1)
-        self.assertTrue(percolator_second_name in matches1)
+        first_percolator_found = False
+        second_percolator_found = False
+        for match in matches1:
+            if match['_id'] == percolator_name:
+                first_percolator_found = True
+            if match['_id'] == percolator_second_name:
+                second_percolator_found = True
+        self.assertTrue(first_percolator_found)
+        self.assertTrue(second_percolator_found)
         self.assertEqual(2, len(matches1))
 
         matches2 = percolator.match_doc(doc2)
@@ -58,8 +63,15 @@ class PercolatorTest(unittest.TestCase, Base):
 
         second_matches = percolator.match_doc(doc_second, second_query)
 
-        self.assertFalse(percolator_name in second_matches)
-        self.assertTrue(percolator_second_name in second_matches)
+        first_percolator_found = False
+        second_percolator_found = False
+        for match in second_matches:
+            if match['_id'] == percolator_name:
+                first_percolator_found = True
+            if match['_id'] == percolator_second_name:
+                second_percolator_found = True
+        self.assertFalse(first_percolator_found)
+        self.assertTrue(second_percolator_found)
         self.assertEqual(1, len(second_matches))
 
 

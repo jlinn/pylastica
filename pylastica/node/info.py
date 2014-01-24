@@ -117,6 +117,6 @@ class Info(object):
         """
         self._params = params
         query = {param: True for param in params} if params is not None else None
-        self._response = self.node.client.request("_cluster/nodes/%s" % self.node.name, query=query)
+        self._response = self.node.client.request("_nodes/%s" % self.node.name, query=query)
         data = self.response.data
         self._data = data['nodes'].items()[0][1]

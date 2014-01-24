@@ -61,7 +61,7 @@ class Status(object):
         @rtype: bool
         """
         response = self._client.request('/_alias/%s' % alias)
-        if response.has_error() and ('AliasMissingException' in response.error or response.status == '404'):
+        if response.has_error() and ('AliasMissingException' in response.error or response.status == 404):
             return False
         return True
 
@@ -75,7 +75,7 @@ class Status(object):
         @raise: pylastica.exception.AliasMissingException if the requested alias does not exist
         """
         response = self._client.request('_alias/%s' % alias)
-        if response.has_error() and ('AliasMissingException' in response.error or response.status == '404'):
+        if response.has_error() and ('AliasMissingException' in response.error or response.status == 404):
             #the requested alias does not exist
             return []
         indices = response.data

@@ -31,7 +31,7 @@ class IndexTest(unittest.TestCase, Base):
         doc_type.mapping = mapping
         doc_type.add_document(doc)
         index.optimize()
-        stored_mapping = doc_type.mapping
+        stored_mapping = doc_type.mapping['pylastica_test']['mappings']
         self.assertEqual(stored_mapping['test']['properties']['id']['type'], 'integer')
         self.assertTrue(stored_mapping['test']['properties']['id']['store'])
         index.delete()
@@ -143,13 +143,14 @@ class IndexTest(unittest.TestCase, Base):
         index.refresh()
         result_set = doc_type.search('ruflin')
         self.assertEqual(1, len(result_set))
+
         data = index.add_alias(alias_name, True).data
-        self.assertTrue(data['ok'])
+        self.assertTrue(data['acknowledged'])
         index_2 = client.get_index(alias_name)
         type_2 = index_2.get_doc_type(type_name)
         result_set_2 = type_2.search('ruflin')
         self.assertEqual(1, len(result_set_2))
         response = index.remove_alias(alias_name).data
-        self.assertTrue(response['ok'])
+        self.assertTrue(response['acknowledged'])
         index.delete()
 

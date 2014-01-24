@@ -26,10 +26,10 @@ class Settings(object):
         @rtype: dict or str or None
         """
         data = self.request().data
-        settings = data[self.index.name]['settings']
+        settings = data[self.index.name]['settings']['index']
         if setting is not None:
-            if "index.%s" % setting in settings:
-                return settings["index.%s" % setting]
+            if setting in settings:
+                return settings[setting]
             else:
                 return None
         return settings

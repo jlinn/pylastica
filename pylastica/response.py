@@ -5,16 +5,19 @@ import pylastica.exception
 
 
 class Response(object):
-    def __init__(self, response_string):
+    def __init__(self, response_string, status=None):
         """
         @param response_string: response string (json)
         @type response_string: str or dict
+        @param status: http status code
+        @type status: int
         """
         self._query_time = None
         self._response_string = ''
         self._error = False
         self._transfer_info = {}
         self._response = None
+        self._status = status
         if isinstance(response_string, dict):
             self._response = response_string
         else:
@@ -27,6 +30,8 @@ class Response(object):
         @return:
         @rtype: str
         """
+        if self._status is not None:
+            return self._status
         status = ''
         response = self.data
         if 'status' in response:
@@ -78,7 +83,13 @@ class Response(object):
                 if not item['index']['ok']:
                     return False
             return True
-        return 'ok' in data and data['ok']
+        if 'status' in data:
+            if 200 <= data['status'] <= 300:
+                return True
+            return False
+        if 200 <= self.status <= 300:
+            return True
+        return ('ok' in data and data['ok']) or ('acknowledged' in data and data['acknowledged'])
 
     def get_data(self):
         """

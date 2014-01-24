@@ -57,7 +57,7 @@ class Http(pylastica.transport.AbstractTransport):
                 content = data
         #TODO: something for debugging
         response = self.request(http_method, base_url, query, content)
-        response_object = pylastica.response.Response(response.data)
+        response_object = pylastica.response.Response(response.data, response.status)
         return response_object
 
     def setHeader(self, key, value):

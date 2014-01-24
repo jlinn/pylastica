@@ -1,5 +1,3 @@
-from pylastica.suggest.abstract import AbstractSuggestion
-
 __author__ = 'Joe Linn'
 
 import pylastica.param
@@ -7,6 +5,8 @@ import pylastica.scriptfields
 from .abstract import AbstractQuery
 from .matchall import MatchAll
 from pylastica.suggest.suggest import Suggest
+from pylastica.aggregation.abstractaggregation import AbstractAggregation
+from pylastica.suggest.abstract import AbstractSuggestion
 
 
 class Query(pylastica.param.Param):
@@ -236,6 +236,21 @@ class Query(pylastica.param.Param):
         if 'facets' not in self._params:
             self._params['facets'] = {}
         self._params['facets'][facet.name] = facet.to_dict()
+        return self
+
+    def add_aggregation(self, aggregation):
+        """
+        Add an aggregation to the query
+        @param aggregation:
+        @type aggregation: pylastica.aggregation.AbstractAggregation
+        @return:
+        @rtype: self
+        """
+        if not isinstance(aggregation, AbstractAggregation):
+            raise TypeError("aggregation must be an instance of an implementation of AbstractAggregation: %r" % aggregation)
+        if 'aggs' not in self._params:
+            self._params['aggs'] = {}
+        self._params['aggs'][aggregation.name] = aggregation.to_dict()
         return self
 
     def to_dict(self):

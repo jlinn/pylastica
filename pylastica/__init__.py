@@ -2,6 +2,7 @@ from __future__ import absolute_import
 __author__ = 'Joe Linn'
 __docformat__ = 'epytext'
 
+from . import aggregation
 from . import bulk
 from .client import *
 from . import cluster

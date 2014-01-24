@@ -67,6 +67,25 @@ class ResultSet(object):
         data = self._response.get_data()
         return data['facets'] if 'facets' in data else {}
 
+    def has_aggregations(self):
+        """
+        Determine whether or not this result set has aggregations
+        @return:
+        @rtype: bool
+        """
+        data = self._response.get_data()
+        return 'aggregations' in data
+
+    @property
+    def aggregations(self):
+        """
+
+        @return:
+        @rtype: dict
+        """
+        data = self._response.get_data()
+        return data['aggregations'] if 'aggregations' in data else {}
+
     def get_total_hits(self):
         """
         Returns the number of total found hits

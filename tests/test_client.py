@@ -244,6 +244,8 @@ class TestClient(unittest.TestCase, Base):
             }
         }
         response = client.update_document(1, raw_data, index.name, doc_type.name, {'retry_on_conflict': 1})
+        print response.status
+        print response.data
         self.assertTrue(response.is_ok())
 
         document = doc_type.get_document(1)

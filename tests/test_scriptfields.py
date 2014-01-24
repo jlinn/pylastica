@@ -26,7 +26,7 @@ class ScriptFieldsTest(unittest.TestCase, Base):
         result_set = doc_type.search(query)
         first = result_set[0].get_data()
 
-        self.assertEqual(3, first['test'])
+        self.assertEqual(3, first['test'][0])
 
 
 if __name__ == '__main__':
