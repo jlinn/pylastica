@@ -1,5 +1,9 @@
 Changelog
 =========
+### 2014-01-20
+* Update to Elasticsearch 1.0.0.RC1. This is a breaking change.
+* Add aggregations
+
 ### 2014-01-24
 * Update to Elasticsearch 0.90.10
 

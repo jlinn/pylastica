@@ -6,7 +6,7 @@ packages = find_packages(exclude=["tests", "tests.*"])
 
 setup(
     name='pylastica',
-    version='0.1.3',
+    version='1.0.0.RC1',
     packages=packages,
     url='https://github.com/jlinn/pylastica',
     license='LICENSE.txt',
@@ -17,7 +17,7 @@ setup(
     install_requires=['dateutils', 'urllib3'],
     classifiers=[
         'Intended Audience :: Developers',
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 5 - Production/Stable',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Topic :: Internet :: WWW/HTTP :: Indexing/Search'
