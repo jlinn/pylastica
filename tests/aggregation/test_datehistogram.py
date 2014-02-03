@@ -38,7 +38,7 @@ class DateHistogramTest(unittest.TestCase, Base):
         query.add_aggregation(agg)
         results = self._index.search(query).aggregations['hist']
 
-        self.assertEqual(3, len(results))
+        self.assertEqual(3, len(results['buckets']))
 
 
 if __name__ == '__main__':

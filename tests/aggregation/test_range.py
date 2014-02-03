@@ -34,7 +34,7 @@ class RangeTest(unittest.TestCase, Base):
 
         query = Query()
         query.add_aggregation(agg)
-        results = self._index.search(query).aggregations['range']
+        results = self._index.search(query).aggregations['range']['buckets']
         self.assertEqual(2, results[0]['doc_count'])
 
 if __name__ == '__main__':

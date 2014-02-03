@@ -3,7 +3,7 @@ __author__ = 'Joe Linn'
 import pylastica.aggregation.abstractaggregation as abstract
 
 
-class Geohashgrid(abstract.AbstractAggregation):
+class GeohashGrid(abstract.AbstractAggregation):
     def __init__(self, name, field):
         """
         @param name: the name of this aggregation
@@ -11,7 +11,7 @@ class Geohashgrid(abstract.AbstractAggregation):
         @param field: the field on which to perform this aggregation
         @type field: str
         """
-        super(Geohashgrid, self).__init__(name)
+        super(GeohashGrid, self).__init__(name)
         self.set_field(field)
 
     def set_field(self, field):
@@ -20,7 +20,7 @@ class Geohashgrid(abstract.AbstractAggregation):
         @param field: the name of the document field on which to perform this aggregation
         @type field: str
         @return:
-        @rtype: Geohashgrid
+        @rtype: GeohashGrid
         """
         return self.set_param("field", field)
 
@@ -30,7 +30,7 @@ class Geohashgrid(abstract.AbstractAggregation):
         @param precision: an integer between 1 and 12, inclusive. Defaults to 5.
         @type precision: int
         @return:
-        @rtype: Geohashgrid
+        @rtype: GeohashGrid
         """
         return self.set_param("precision", precision)
 
@@ -40,7 +40,7 @@ class Geohashgrid(abstract.AbstractAggregation):
         @param size: defaults to 10,000
         @type size: int
         @return:
-        @rtype: Geohashgrid
+        @rtype: GeohashGrid
         """
         return self.set_param("size", size)
 
@@ -50,6 +50,6 @@ class Geohashgrid(abstract.AbstractAggregation):
         @param shard_size:
         @type shard_size: int
         @return:
-        @rtype: Geohashgrid
+        @rtype: GeohashGrid
         """
         return self.set_param("shard_size", shard_size)

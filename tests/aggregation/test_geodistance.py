@@ -37,7 +37,7 @@ class GeoDistanceTest(unittest.TestCase, Base):
 
         query = Query()
         query.add_aggregation(agg)
-        results = self._index.search(query).aggregations['geo']
+        results = self._index.search(query).aggregations['geo']['buckets']
 
         self.assertEqual(2, results[0]['doc_count'])
 

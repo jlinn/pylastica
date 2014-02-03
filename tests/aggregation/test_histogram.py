@@ -35,7 +35,7 @@ class HistogramTest(unittest.TestCase, Base):
 
         query = Query()
         query.add_aggregation(agg)
-        results = self._index.search(query).aggregations['hist']
+        results = self._index.search(query).aggregations['hist']['buckets']
 
         self.assertEqual(5, len(results))
         self.assertEqual(30, results[3]['key'])

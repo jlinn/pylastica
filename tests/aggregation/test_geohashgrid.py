@@ -1,6 +1,6 @@
 from pylastica.query import Query
 from pylastica import Document
-from pylastica.aggregation.geohashgrid import Geohashgrid
+from pylastica.aggregation.geohashgrid import GeohashGrid
 from pylastica.doc_type import Mapping
 from tests.base import Base
 
@@ -32,7 +32,7 @@ class GeohashgridTest(unittest.TestCase, Base):
         self._index.delete()
 
     def test_geohashgrid_aggregation(self):
-        agg = Geohashgrid("hash", "location")
+        agg = GeohashGrid("hash", "location")
         agg.set_precision(3)
 
         query = Query()
