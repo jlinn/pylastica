@@ -9,9 +9,9 @@ __author__ = 'Joe Linn'
 import unittest
 
 
-class MinTest(unittest.TestCase, Base):
+class MaxTest(unittest.TestCase, Base):
     def setUp(self):
-        super(MinTest, self).setUp()
+        super(MaxTest, self).setUp()
         self._index = self._create_index("test_aggregation_max")
         docs = [
             Document("1", {"price": 5}),
@@ -23,7 +23,7 @@ class MinTest(unittest.TestCase, Base):
         self._index.refresh()
 
     def tearDown(self):
-        super(MinTest, self).tearDown()
+        super(MaxTest, self).tearDown()
         self._index.delete()
 
     def test_to_dict(self):
@@ -45,7 +45,7 @@ class MinTest(unittest.TestCase, Base):
         agg.add_aggregation(Max("subagg").set_field("foo"))
         self.assertEqual(expected, agg.to_dict())
 
-    def test_min_aggregation(self):
+    def test_max_aggregation(self):
         agg = Max("min_price")
         agg.set_field("price")
 

@@ -27,8 +27,7 @@ class ValueCountTest(unittest.TestCase, Base):
         self._index.delete()
 
     def test_value_count_aggregation(self):
-        agg = ValueCount("count")
-        agg.set_field("price")
+        agg = ValueCount("count", "price")
 
         query = Query()
         query.add_aggregation(agg)

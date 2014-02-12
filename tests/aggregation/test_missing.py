@@ -26,7 +26,7 @@ class MissingTest(unittest.TestCase, Base):
         self._index.delete()
 
     def test_missing_aggregation(self):
-        agg = Missing("missing").set_field("color")
+        agg = Missing("missing", "color")
 
         query = Query()
         query.add_aggregation(agg)

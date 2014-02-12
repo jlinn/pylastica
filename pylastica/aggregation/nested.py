@@ -4,6 +4,16 @@ import pylastica.aggregation.abstractaggregation as abstract
 
 
 class Nested(abstract.AbstractAggregation):
+    def __init__(self, name, path):
+        """
+        @param name: the name of this aggregation
+        @type name: str
+        @param path: the nested path for this aggregation
+        @type path: str
+        """
+        super(Nested, self).__init__(name)
+        self.set_path(path)
+
     def set_path(self, path):
         """
         Set the nested path for this aggregation

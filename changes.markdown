@@ -1,5 +1,8 @@
 Changelog
 =========
+### 2014-02-12
+* Update to Elasticsearch 1.0.0
+
 ### 2014-02-03
 * Update to Elasticsearch 1.0.0.RC2
 * Update GeohashGrid aggregation to reflect name change

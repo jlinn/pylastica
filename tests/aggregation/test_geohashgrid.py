@@ -12,7 +12,7 @@ import unittest
 class GeohashgridTest(unittest.TestCase, Base):
     def setUp(self):
         super(GeohashgridTest, self).setUp()
-        self._index = self._create_index("test_aggregation_geo_distance")
+        self._index = self._create_index("test_aggregation_geohash_grid")
         mapping = Mapping()
         mapping.set_properties({
             "location": {"type": "geo_point"}

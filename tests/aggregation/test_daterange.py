@@ -40,7 +40,7 @@ class DateRangeTest(unittest.TestCase, Base):
         query.add_aggregation(agg)
         results = self._index.search(query).aggregations['date']
 
-        for bucket in results:
+        for bucket in results['buckets']:
             if 'to' in bucket:
                 self.assertEqual(1, bucket['doc_count'])
             elif 'from' in bucket:

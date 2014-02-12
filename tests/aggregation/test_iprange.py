@@ -32,7 +32,7 @@ class IpRangeTest(unittest.TestCase, Base):
         self._index.delete()
 
     def test_ip_range_aggregation(self):
-        agg = IpRange("ip").set_field("address")
+        agg = IpRange("ip", "address")
         agg.add_range(from_value="192.168.1.101").add_range(to_value="192.168.1.200").add_mask_range("192.168.1.0/24")
 
         query = Query()

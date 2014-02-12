@@ -48,7 +48,7 @@ class NestedTest(unittest.TestCase, Base):
         self._index.delete()
 
     def test_nested_aggregation(self):
-        agg = Nested("resellers").set_path("resellers")
+        agg = Nested("resellers", "resellers")
         agg.add_aggregation(Min("min_price").set_field("price"))
 
         query = Query()
