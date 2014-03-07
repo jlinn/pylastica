@@ -1,5 +1,9 @@
 Changelog
 =========
+### 2014-03-07
+* Update to Elasticsearch 1.0.1
+* Add snapshot / restore functionality
+
 ### 2014-02-12
 * Update to Elasticsearch 1.0.0
 

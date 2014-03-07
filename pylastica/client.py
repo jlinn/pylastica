@@ -3,11 +3,13 @@ __author__ = 'Joe Linn'
 import pylastica.connection
 import pylastica.index
 import pylastica.request
+import pylastica.snapshot
 
 
 class Client(object):
 
-    def __init__(self, host=None, port=None, path=None, url=None, transport=None, persistent=True, timeout=None, connections=None, round_robin=False, log=False, retry_on_conflict=0, callback=None):
+    def __init__(self, host=None, port=None, path=None, url=None, transport=None, persistent=True, timeout=None,
+                 connections=None, round_robin=False, log=False, retry_on_conflict=0, callback=None):
         """
         @param host:
         @type host: str
@@ -305,6 +307,15 @@ class Client(object):
         @rtype: pylastica.cluster.Cluster
         """
         return pylastica.cluster.Cluster(self)
+
+    @property
+    def snapshot(self):
+        """
+        Returns an object capable of performing snapshot operations
+        @return:
+        @rtype: pylastica.snapshot.Snapshot
+        """
+        return pylastica.snapshot.Snapshot(self)
 
     def add_connection(self, connection):
         """
