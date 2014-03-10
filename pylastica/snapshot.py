@@ -76,7 +76,8 @@ class Snapshot(object):
         """
         if options is None:
             options = {}
-        return self.request("%s/%s" % (repository, name), pylastica.request.Request.PUT, options, {"wait_for_completion": wait_for_completion})
+        return self.request("%s/%s" % (repository, name), pylastica.request.Request.PUT, options,
+                            {"wait_for_completion": wait_for_completion})
 
     def get_snapshot(self, repository, name):
         """
@@ -115,7 +116,7 @@ class Snapshot(object):
         """
         return self.request("%s/%s" % (repository, name), pylastica.request.Request.DELETE)
 
-    def restore_snapshot(self, repository, name, options=None):
+    def restore_snapshot(self, repository, name, options=None, wait_for_completion=False):
         """
         Restore a snapshot
         @param repository: the name of the repository
@@ -124,12 +125,15 @@ class Snapshot(object):
         @type name: str
         @param options: options for the restore operation
         @type options: dict
+        @param wait_for_completion: if True, the HTTP request will not return until the restore operation is complete
+        @type wait_for_completion: bool
         @return:
         @rtype: pylastica.response.Response
         """
         if options is None:
             options = {}
-        return self.request("%s/%s/_restore" % (repository, name), pylastica.request.Request.POST, options)
+        return self.request("%s/%s/_restore" % (repository, name), pylastica.request.Request.POST, options,
+                            {"wait_for_completion": wait_for_completion})
 
     def request(self, path, method=pylastica.request.Request.GET, data=None, query=None):
         """
