@@ -74,10 +74,10 @@ class Snapshot(object):
         @return:
         @rtype: pylastica.response.Response
         """
-        if options is None:
-            options = {}
-        return self.request("%s/%s" % (repository, name), pylastica.request.Request.PUT, options,
-                            {"wait_for_completion": wait_for_completion})
+        query = None
+        if wait_for_completion:
+            query = {"wait_for_completion": "true"}
+        return self.request("%s/%s" % (repository, name), pylastica.request.Request.PUT, options, query)
 
     def get_snapshot(self, repository, name):
         """
@@ -130,10 +130,10 @@ class Snapshot(object):
         @return:
         @rtype: pylastica.response.Response
         """
-        if options is None:
-            options = {}
-        return self.request("%s/%s/_restore" % (repository, name), pylastica.request.Request.POST, options,
-                            {"wait_for_completion": wait_for_completion})
+        query = None
+        if wait_for_completion:
+            query = {"wait_for_completion": "true"}
+        return self.request("%s/%s/_restore" % (repository, name), pylastica.request.Request.POST, options, query)
 
     def request(self, path, method=pylastica.request.Request.GET, data=None, query=None):
         """
