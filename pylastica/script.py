@@ -74,7 +74,7 @@ class Script(pylastica.param.Param):
         """
         self.set_param('_id', doc_id)
 
-    def has_doc_id(self):
+    def has_id(self):
         """
 
         @return:

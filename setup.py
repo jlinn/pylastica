@@ -6,7 +6,7 @@ packages = find_packages(exclude=["tests", "tests.*"])
 
 setup(
     name='pylastica',
-    version='1.0.1.1',
+    version='1.1.0.0',
     packages=packages,
     url='https://github.com/jlinn/pylastica',
     license='LICENSE.txt',

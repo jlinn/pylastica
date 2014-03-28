@@ -1,5 +1,9 @@
 Changelog
 =========
+### 2014-03-28
+* Update to Elasticsearch 1.1.0
+* Add support for [indices filter](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-indices-filter.html)
+
 ### 2014-03-07
 * Update to Elasticsearch 1.0.1
 * Add snapshot / restore functionality

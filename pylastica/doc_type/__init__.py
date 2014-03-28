@@ -1,9 +1,10 @@
 __author__ = 'Joe Linn'
 
 import urllib
-#import pylastica
 from .abstracttype import *
 from .mapping import *
+import pylastica.searchable
+
 
 class DocType(pylastica.searchable.Searchable):
     def __init__(self, index, name):
@@ -59,8 +60,8 @@ class DocType(pylastica.searchable.Searchable):
     def update_document(self, data):
         """
         Update a document using an update script.
-        @param doc: document with update data
-        @type doc: pylastica.document.Document or pylastica.script.Script
+        @param data: document with update data
+        @type data: pylastica.document.Document or pylastica.script.Script
         @return:
         @rtype: pylastica.response.Response
         """
