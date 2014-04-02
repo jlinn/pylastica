@@ -1,5 +1,8 @@
 Changelog
 =========
+### 2014-04-02
+* Add `set_size()` and `set_shard_size()` methods to {Terms aggregation](https://github.com/jlinn/pylastica/blob/master/pylastica/aggregation/terms.py)
+
 ### 2014-03-28
 * Update to Elasticsearch 1.1.0
 * Add support for [indices filter](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-indices-filter.html)

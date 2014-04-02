@@ -74,3 +74,23 @@ class Terms(abstract.SimpleAggregation):
         @rtype: Terms
         """
         return self.set_param("execution_hint", hint)
+
+    def set_size(self, size):
+        """
+        Define how many term buckets should be returned
+        @param size:
+        @type size: int
+        @return:
+        @rtype: Terms
+        """
+        return self.set_param("size", size)
+
+    def set_shard_size(self, shard_size):
+        """
+        Determines how many terms the coordinating node will request from each shard.
+        @param shard_size: This number cannot be smaller than the "size" parameter
+        @type shard_size: int
+        @return:
+        @rtype: Terms
+        """
+        return self.set_param("shard_size", shard_size)
