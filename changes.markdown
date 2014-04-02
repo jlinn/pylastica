@@ -1,7 +1,7 @@
 Changelog
 =========
 ### 2014-04-02
-* Add `set_size()` and `set_shard_size()` methods to {Terms aggregation](https://github.com/jlinn/pylastica/blob/master/pylastica/aggregation/terms.py)
+* Add `set_size()` and `set_shard_size()` methods to [Terms aggregation](https://github.com/jlinn/pylastica/blob/master/pylastica/aggregation/terms.py)
 
 ### 2014-03-28
 * Update to Elasticsearch 1.1.0
