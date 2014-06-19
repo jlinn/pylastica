@@ -10,7 +10,7 @@ class Base(object):
         @rtype: dict
         """
         return [
-            {'host': 'localhost', 'port': 9200},
+            {'host': 'joe.vr', 'port': 9200},
             {'host': 'localhost', 'port': 9200}
         ]
 

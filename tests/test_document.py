@@ -2,7 +2,8 @@ __author__ = 'Joe Linn'
 
 import unittest
 import pylastica
-from .base import Base
+from tests.base import Base
+
 
 class TestDocument(unittest.TestCase, Base):
     def test_add_file(self):

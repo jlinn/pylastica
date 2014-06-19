@@ -1,8 +1,13 @@
+from random import randint
+from pylastica.query.filtered import Filtered
+from pylastica.query.query import Query
+from pylastica.document import Document
+
 __author__ = 'Joe Linn'
 
 import unittest
 import pylastica
-from .base import *
+from tests.base import Base
 
 
 class SearchTest(unittest.TestCase, Base):
@@ -64,6 +69,20 @@ class SearchTest(unittest.TestCase, Base):
         self.assertFalse(result.response.has_error())
         index.delete()
 
+    def test_scroll(self):
+        search = pylastica.Search(self._get_client())
+
+        index = self._create_index("test_scroll")
+        doc_type = index.get_doc_type("test")
+        doc_type.add_documents([Document(i, {"clicks": randint(0, 100)}) for i in range(0, 100)])
+        index.refresh()
+
+        search.add_index(index)
+        doc_ids = set()
+        for result in search.scroll("2m", options={"size": 11}):
+            doc_ids.add(result.get_id())
+
+        self.assertEqual(100, len(doc_ids))
 
 if __name__ == '__main__':
     unittest.main()

@@ -3,7 +3,7 @@ __author__ = 'Joe Linn'
 import os
 import unittest
 import pylastica
-from ..base import Base
+from tests.base import Base
 
 
 class IndexTest(unittest.TestCase, Base):

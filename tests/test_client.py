@@ -2,7 +2,8 @@ __author__ = 'Joe Linn'
 
 import unittest
 import pylastica
-from .base import *
+from tests.base import Base
+
 
 class TestClient(unittest.TestCase, Base):
     def test_connections(self):

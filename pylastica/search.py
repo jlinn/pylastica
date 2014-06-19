@@ -1,8 +1,8 @@
 __author__ = 'Joe Linn'
 
-#import pylastica
 import pylastica.client
 import pylastica.query
+
 
 class Search(object):
     OPTION_SEARCH_TYPE = 'search_type'
@@ -322,6 +322,8 @@ class Search(object):
         @return: search path (url)
         @rtype: str
         """
+        if self.OPTION_SCROLL_ID in self.options and self.options[self.OPTION_SCROLL_ID] is not None:
+            return "_search/scroll"
         indices = self.indices
         path = ''
         doc_types = self.doc_types
@@ -361,6 +363,34 @@ class Search(object):
         query = self.query
         response = self.client.request(self.path, data=query.to_dict(), query={self.OPTION_SEARCH_TYPE: self.SEARCH_TYPE_COUNT})
         return pylastica.resultset.ResultSet(response, query).get_total_hits()
+
+    def scroll(self, scroll, query=None, options=None, scroll_id=None):
+        """
+        Perform a scrolled search.
+        http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-scroll.html
+        @param scroll: a time value parameter indicating how long participating nodes will maintain resources relevant to this search
+        @type scroll: str
+        @param query:
+        @type query: pylastica.query.Query
+        @param options:
+        @type options: dict
+        @param scroll_id:
+        @type scroll_id: str
+        @return:
+        @rtype: pylastica.result.Result
+        """
+        if options is None:
+            options = {}
+        options[pylastica.Search.OPTION_SCROLL] = scroll
+        has_more = True
+        while has_more:
+            if scroll_id is not None:
+                options[pylastica.Search.OPTION_SCROLL_ID] = scroll_id
+            results = self.search(query, options)
+            has_more = len(results.results) > 0
+            scroll_id = results.response.scroll_id
+            for result in results.results:
+                yield result
 
     def set_options_and_query(self, options=None, query=None):
         """

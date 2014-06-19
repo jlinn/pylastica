@@ -2,7 +2,7 @@ __author__ = 'Joe Linn'
 
 import unittest
 import pylastica
-from ..base import *
+from tests.base import Base
 
 
 class ExistsTest(unittest.TestCase, Base):

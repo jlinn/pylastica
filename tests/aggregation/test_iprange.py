@@ -40,7 +40,7 @@ class IpRangeTest(unittest.TestCase, Base):
         results = self._index.search(query).aggregations['ip']
 
         for bucket in results['buckets']:
-            if 'key' in bucket:
+            if 'from' in bucket and 'to' in bucket:
                 #the CIDR mask
                 self.assertEqual(3, bucket['doc_count'])
             else:

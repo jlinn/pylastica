@@ -1,8 +1,9 @@
+
 __author__ = 'Joe Linn'
 
 import unittest
 import pylastica
-from .base import Base
+from tests.base import Base
 
 
 class BulkTest(unittest.TestCase, Base):

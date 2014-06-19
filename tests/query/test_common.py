@@ -1,7 +1,7 @@
 __author__ = 'Joe Linn'
 
 import unittest
-from ..base import *
+from tests.base import Base
 import pylastica
 
 

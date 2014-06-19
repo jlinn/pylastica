@@ -4,7 +4,7 @@ import unittest
 import hashlib
 import random
 import pylastica
-from ..base import *
+from tests.base import Base
 
 
 class QueryStringTest(unittest.TestCase, Base):
