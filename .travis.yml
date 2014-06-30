@@ -10,7 +10,7 @@ env:
   global:
     - ES_VER=1.2.1
     - ES_MAPPER_ATTACHMENTS_VER=2.0.0
-    - ES_TRANSPORT_THRIFT_VER=2.0.0
+    - ES_TRANSPORT_THRIFT_VER=2.2.0
     - ES_RABBITMQ_PLUGIN_VER=2.0.0
 
 # install Elasticsearch
