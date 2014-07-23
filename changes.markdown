@@ -1,5 +1,9 @@
 Changelog
 =========
+### 2014-07-23
+* Update to Elasticsearch 1.3.0
+* Add support for [top hits aggregation](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations-metrics-top-hits-aggregation.html)
+
 ### 2014-06-19
 * Update to Elasticsearch 1.2.1
 
